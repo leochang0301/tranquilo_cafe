@@ -766,11 +766,11 @@
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        // ← 完全不設 headers
+        body: new URLSearchParams({ data: JSON.stringify(payload) })
       });
     } catch (e) {
-      // no-cors will throw — treat as success if network reached
+      // ignore
     }
 
     // Show success
