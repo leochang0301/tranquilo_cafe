@@ -15,18 +15,14 @@
     --dark-caramel: #a0723a;
     --espresso: #3d2314;
     --dark-brown: #2a1a0e;
-    --sage: #8a9e7a;
     --rust: #b85c38;
+    --hot: #c0392b;
+    --cold: #2980b9;
     --shadow: rgba(61, 35, 20, 0.12);
     --shadow-deep: rgba(61, 35, 20, 0.22);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   body {
     background-color: var(--cream);
@@ -35,8 +31,8 @@
     min-height: 100vh;
     padding-bottom: 140px;
     background-image:
-      radial-gradient(ellipse at 20% 20%, rgba(200, 150, 90, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(138, 158, 122, 0.06) 0%, transparent 60%);
+      radial-gradient(ellipse at 20% 20%, rgba(200,150,90,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(138,158,122,0.06) 0%, transparent 60%);
   }
 
   /* ── Header ── */
@@ -47,537 +43,206 @@
     position: relative;
     overflow: hidden;
   }
-
   header::before {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 8px,
-        rgba(255,255,255,0.025) 8px,
-        rgba(255,255,255,0.025) 9px
-      );
+    background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.025) 8px, rgba(255,255,255,0.025) 9px);
     pointer-events: none;
   }
-
-  .header-ornament {
-    color: var(--caramel);
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    opacity: 0.8;
-    margin-bottom: 6px;
-  }
-
-  header h1 {
-    font-family: 'Lora', serif;
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--warm-white);
-    letter-spacing: 1px;
-  }
-
-  header p {
-    color: var(--tan);
-    font-size: 12px;
-    margin-top: 6px;
-    letter-spacing: 1px;
-    opacity: 0.75;
-  }
+  .header-ornament { color: var(--caramel); font-family: 'Lora', serif; font-style: italic; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; margin-bottom: 6px; }
+  header h1 { font-family: 'Lora', serif; font-size: 26px; font-weight: 600; color: var(--warm-white); letter-spacing: 1px; }
+  header p  { color: var(--tan); font-size: 12px; margin-top: 6px; letter-spacing: 1px; opacity: 0.75; }
 
   /* ── Divider ── */
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 20px;
-    margin: 22px 0 16px;
-  }
+  .divider { display: flex; align-items: center; gap: 10px; padding: 0 20px; margin: 22px 0 16px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--tan); }
+  .divider span { font-family: 'Lora', serif; font-style: italic; font-size: 12px; color: var(--caramel); white-space: nowrap; letter-spacing: 1px; }
 
-  .divider::before,
-  .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--tan);
+  /* ── Category header ── */
+  .category-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 20px; margin: 18px 0 10px;
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--caramel); font-family: 'Lora', serif; font-style: italic;
   }
-
-  .divider span {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 12px;
-    color: var(--caramel);
-    white-space: nowrap;
-    letter-spacing: 1px;
-  }
+  .category-header::after { content: ''; flex: 1; height: 1px; background: var(--tan); }
 
   /* ── Menu ── */
-  .menu-section {
-    padding: 0 16px;
-  }
+  .menu-section { padding: 0 16px; }
 
   .menu-item {
-    background: white;
-    border-radius: 14px;
-    padding: 16px 18px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    background: white; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
     box-shadow: 0 2px 10px var(--shadow);
-    border: 1px solid rgba(232, 213, 183, 0.5);
-    transition: box-shadow 0.2s, transform 0.15s;
-    position: relative;
-    overflow: hidden;
+    border: 1px solid rgba(232,213,183,0.5);
+    transition: box-shadow 0.2s;
+    position: relative; overflow: hidden;
   }
+  .menu-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--tan); transition: background 0.2s; }
+  .menu-item.has-qty::before { background: var(--caramel); }
+  .menu-item.has-qty { box-shadow: 0 4px 16px var(--shadow-deep); }
 
-  .menu-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--tan);
-    transition: background 0.2s;
-  }
+  .item-emoji { font-size: 28px; flex-shrink: 0; width: 38px; text-align: center; }
+  .item-info  { flex: 1; min-width: 0; }
+  .item-name  { font-size: 14px; font-weight: 600; color: var(--dark-brown); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .item-price { font-family: 'Lora', serif; font-size: 13px; color: var(--caramel); font-style: italic; }
 
-  .menu-item.has-qty::before {
-    background: var(--caramel);
-  }
-
-  .menu-item.has-qty {
-    box-shadow: 0 4px 16px var(--shadow-deep);
-  }
-
-  .item-emoji {
-    font-size: 30px;
-    flex-shrink: 0;
-    width: 42px;
-    text-align: center;
-  }
-
-  .item-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .item-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--dark-brown);
-    margin-bottom: 3px;
-  }
-
-  .item-price {
-    font-family: 'Lora', serif;
-    font-size: 13px;
-    color: var(--caramel);
-    font-style: italic;
-  }
-
-  /* ── Quantity Control ── */
-  .qty-control {
-    display: flex;
-    align-items: center;
-    gap: 0;
+  /* 溫度標籤 */
+  .temp-badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 1px 6px; border-radius: 8px;
+    font-family: 'Noto Serif TC', serif; font-style: normal;
     flex-shrink: 0;
   }
+  .temp-badge.hot  { background: rgba(192,57,43,0.1);  color: var(--hot); }
+  .temp-badge.cold { background: rgba(41,128,185,0.12); color: var(--cold); }
 
+  /* ── Qty Control ── */
+  .qty-control { display: flex; align-items: center; flex-shrink: 0; }
   .qty-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1.5px solid var(--tan);
-    background: var(--warm-white);
-    color: var(--espresso);
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    user-select: none;
-    font-family: 'Lora', serif;
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1.5px solid var(--tan); background: var(--warm-white);
+    color: var(--espresso); font-size: 18px; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; user-select: none; font-family: 'Lora', serif;
   }
+  .qty-btn:active { background: var(--caramel); border-color: var(--caramel); color: white; transform: scale(0.9); }
+  .qty-btn.plus   { background: var(--caramel); border-color: var(--caramel); color: white; }
+  .qty-btn.plus:active { background: var(--dark-caramel); border-color: var(--dark-caramel); }
+  .qty-display { width: 34px; text-align: center; font-size: 16px; font-weight: 700; color: var(--espresso); font-family: 'Lora', serif; }
 
-  .qty-btn:active {
-    background: var(--caramel);
-    border-color: var(--caramel);
-    color: white;
-    transform: scale(0.9);
+  /* ── Loading / Error ── */
+  .menu-loading {
+    text-align: center; padding: 40px 20px;
+    color: var(--caramel); font-family: 'Lora', serif; font-style: italic; font-size: 14px;
   }
-
-  .qty-btn.plus {
-    background: var(--caramel);
-    border-color: var(--caramel);
-    color: white;
+  .menu-error {
+    margin: 0 16px; background: white; border-radius: 14px; padding: 24px;
+    text-align: center; color: var(--rust); font-size: 13px;
+    border: 1px dashed var(--rust);
   }
-
-  .qty-btn.plus:active {
-    background: var(--dark-caramel);
-    border-color: var(--dark-caramel);
-  }
-
-  .qty-display {
-    width: 34px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--espresso);
-    font-family: 'Lora', serif;
+  .menu-error button {
+    margin-top: 12px; padding: 8px 20px; background: var(--rust); color: white;
+    border: none; border-radius: 20px; font-size: 13px; cursor: pointer;
+    font-family: 'Noto Serif TC', serif;
   }
 
   /* ── Order Summary ── */
   .summary-section {
-    margin: 20px 16px 0;
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 3px 14px var(--shadow);
-    border: 1px solid rgba(232, 213, 183, 0.6);
+    margin: 20px 16px 0; background: white; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 3px 14px var(--shadow); border: 1px solid rgba(232,213,183,0.6);
   }
-
-  .summary-header {
-    background: var(--espresso);
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .summary-header span {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--tan);
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
-
-  .summary-body {
-    padding: 14px 18px;
-  }
-
-  .summary-empty {
-    color: var(--tan);
-    font-size: 13px;
-    text-align: center;
-    padding: 8px 0;
-    font-style: italic;
-    font-family: 'Lora', serif;
-  }
-
+  .summary-header { background: var(--espresso); padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
+  .summary-header span { font-family: 'Lora', serif; font-style: italic; color: var(--tan); font-size: 13px; letter-spacing: 0.5px; }
+  .summary-body { padding: 14px 18px; }
+  .summary-empty { color: var(--tan); font-size: 13px; text-align: center; padding: 8px 0; font-style: italic; font-family: 'Lora', serif; }
   .summary-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    font-size: 14px;
-    color: var(--dark-brown);
-    border-bottom: 1px dashed rgba(232, 213, 183, 0.5);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 5px 0; font-size: 14px; color: var(--dark-brown);
+    border-bottom: 1px dashed rgba(232,213,183,0.5);
   }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row .qty-tag { background: var(--tan); color: var(--espresso); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; margin-right: 6px; }
+  .summary-row .row-price { font-family: 'Lora', serif; font-style: italic; color: var(--caramel); font-size: 13px; }
+  .summary-total { margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--tan); display: flex; justify-content: space-between; align-items: baseline; }
+  .summary-total .label  { font-size: 13px; color: var(--espresso); letter-spacing: 0.5px; }
+  .summary-total .amount { font-family: 'Lora', serif; font-size: 22px; font-weight: 600; color: var(--rust); }
+  .summary-total .amount span { font-size: 13px; font-weight: 400; margin-right: 2px; }
 
-  .summary-row:last-child {
-    border-bottom: none;
-  }
-
-  .summary-row .qty-tag {
-    background: var(--tan);
-    color: var(--espresso);
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 10px;
-    margin-right: 6px;
-  }
-
-  .summary-row .row-price {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--caramel);
-    font-size: 13px;
-  }
-
-  .summary-total {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 2px solid var(--tan);
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  .summary-total .label {
-    font-size: 13px;
-    color: var(--espresso);
-    letter-spacing: 0.5px;
-  }
-
-  .summary-total .amount {
-    font-family: 'Lora', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--rust);
-  }
-
-  .summary-total .amount span {
-    font-size: 13px;
-    font-weight: 400;
-    margin-right: 2px;
-  }
-
-  /* ── Seat Input ── */
-  .seat-section {
-    margin: 14px 16px 0;
-  }
-
-  .seat-label {
-    font-size: 13px;
-    color: var(--espresso);
-    margin-bottom: 7px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    letter-spacing: 0.3px;
-  }
-
-  .seat-label .required {
-    color: var(--rust);
-    font-size: 14px;
-  }
-
+  /* ── Seat & Guest ── */
+  .seat-section { margin: 14px 16px 0; }
+  .seat-label { font-size: 13px; color: var(--espresso); margin-bottom: 7px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px; }
+  .seat-label .required { color: var(--rust); font-size: 14px; }
   .seat-input {
-    width: 100%;
-    padding: 13px 16px;
-    border: 1.5px solid var(--tan);
-    border-radius: 12px;
-    font-size: 16px;
-    font-family: 'Noto Serif TC', serif;
-    background: white;
-    color: var(--espresso);
-    outline: none;
+    width: 100%; padding: 13px 16px; border: 1.5px solid var(--tan); border-radius: 12px;
+    font-size: 16px; font-family: 'Noto Serif TC', serif;
+    background: white; color: var(--espresso); outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px var(--shadow);
+    box-shadow: 0 2px 8px var(--shadow); margin-bottom: 12px;
   }
+  .seat-input:focus { border-color: var(--caramel); box-shadow: 0 0 0 3px rgba(200,150,90,0.15); }
+  .seat-input::placeholder { color: var(--tan); font-style: italic; font-family: 'Lora', serif; font-size: 14px; }
 
-  .seat-input:focus {
-    border-color: var(--caramel);
-    box-shadow: 0 0 0 3px rgba(200, 150, 90, 0.15);
-  }
-
-  .seat-input::placeholder {
-    color: var(--tan);
-    font-style: italic;
-    font-family: 'Lora', serif;
-    font-size: 14px;
-  }
-
-  /* ── Submit Button ── */
+  /* ── Submit ── */
   .submit-wrap {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
     padding: 14px 16px 28px;
     background: linear-gradient(to top, var(--cream) 70%, transparent);
     z-index: 100;
   }
-
   .submit-btn {
-    width: 100%;
-    padding: 17px;
-    background: var(--espresso);
-    color: var(--warm-white);
-    border: none;
-    border-radius: 16px;
-    font-size: 16px;
-    font-family: 'Noto Serif TC', serif;
-    font-weight: 600;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(61, 35, 20, 0.35);
-    position: relative;
-    overflow: hidden;
+    width: 100%; padding: 17px; background: var(--espresso);
+    color: var(--warm-white); border: none; border-radius: 16px;
+    font-size: 16px; font-family: 'Noto Serif TC', serif; font-weight: 600;
+    letter-spacing: 2px; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(61,35,20,0.35); position: relative; overflow: hidden;
   }
+  .submit-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%); pointer-events: none; }
+  .submit-btn:active:not(:disabled) { transform: scale(0.98); box-shadow: 0 2px 10px rgba(61,35,20,0.3); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  .submit-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .submit-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: 0 2px 10px rgba(61, 35, 20, 0.3);
-  }
-
-  .submit-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  /* ── Success State ── */
+  /* ── Success Overlay ── */
   .success-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(42, 26, 14, 0.55);
-    backdrop-filter: blur(4px);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
+    display: none; position: fixed; inset: 0;
+    background: rgba(42,26,14,0.55); backdrop-filter: blur(4px);
+    z-index: 200; align-items: center; justify-content: center; padding: 30px;
   }
-
-  .success-overlay.show {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
+  .success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .success-card {
-    background: white;
-    border-radius: 24px;
-    padding: 36px 28px;
-    text-align: center;
-    width: 100%;
-    max-width: 340px;
-    box-shadow: 0 20px 60px rgba(61, 35, 20, 0.4);
-    animation: slideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: white; border-radius: 24px; padding: 36px 28px; text-align: center;
+    width: 100%; max-width: 340px;
+    box-shadow: 0 20px 60px rgba(61,35,20,0.4);
+    animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1);
     border: 1px solid var(--tan);
   }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .success-icon  { font-size: 52px; margin-bottom: 16px; display: block; }
+  .success-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: var(--dark-brown); margin-bottom: 10px; }
+  .success-msg   { font-size: 13px; color: #888; margin-bottom: 16px; line-height: 1.6; }
+  .order-number  { background: var(--cream); border: 1.5px dashed var(--caramel); border-radius: 12px; padding: 12px 20px; margin-bottom: 8px; }
+  .order-number .label  { font-size: 11px; color: var(--caramel); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; font-family: 'Lora', serif; font-style: italic; }
+  .order-number .number { font-family: 'Lora', serif; font-size: 24px; font-weight: 600; color: var(--espresso); letter-spacing: 2px; }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px) scale(0.96); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .success-icon {
-    font-size: 52px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .success-title {
-    font-family: 'Lora', serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--dark-brown);
-    margin-bottom: 10px;
-  }
-
-  .success-msg {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
-
-  .order-number {
-    background: var(--cream);
-    border: 1.5px dashed var(--caramel);
-    border-radius: 12px;
-    padding: 12px 20px;
-    margin-bottom: 8px;
-  }
-
-  .order-number .label {
-    font-size: 11px;
-    color: var(--caramel);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    font-family: 'Lora', serif;
-    font-style: italic;
-  }
-
-  .order-number .number {
-    font-family: 'Lora', serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--espresso);
-    letter-spacing: 2px;
-  }
-
-  /* ── Loading State ── */
-  .loading-dots {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .loading-dots span {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--tan);
-    animation: dot 1.2s ease-in-out infinite;
-  }
-
+  /* ── Loading dots ── */
+  .loading-dots { display: inline-flex; gap: 4px; align-items: center; }
+  .loading-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--tan); animation: dot 1.2s ease-in-out infinite; }
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dot { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
 
-  @keyframes dot {
-    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-    40% { transform: scale(1); opacity: 1; }
-  }
-
-  /* ── Error toast ── */
+  /* ── Toast ── */
   .toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
+    position: fixed; top: 20px; left: 50%;
     transform: translateX(-50%) translateY(-80px);
-    background: var(--rust);
-    color: white;
-    padding: 12px 22px;
-    border-radius: 30px;
-    font-size: 13px;
-    z-index: 300;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    white-space: nowrap;
-    box-shadow: 0 6px 20px rgba(184, 92, 56, 0.4);
-    letter-spacing: 0.3px;
+    background: var(--rust); color: white; padding: 12px 22px;
+    border-radius: 30px; font-size: 13px; z-index: 300;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap; box-shadow: 0 6px 20px rgba(184,92,56,0.4); letter-spacing: 0.3px;
   }
-
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="header-ornament">☕ Welcome</div>
   <h1>線上點餐</h1>
   <p>選好後送出，我們馬上為您準備</p>
 </header>
 
-<!-- Menu -->
 <div class="divider"><span>今日菜單</span></div>
-<div class="menu-section" id="menuSection"></div>
+<div class="menu-section" id="menuSection">
+  <div class="menu-loading">
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+    <div style="margin-top:10px;">菜單載入中…</div>
+  </div>
+</div>
 
-<!-- Order Summary -->
 <div class="divider"><span>我的訂單</span></div>
 <div class="summary-section">
-  <div class="summary-header">
-    <span>📋 已選品項</span>
-  </div>
+  <div class="summary-header"><span>📋 已選品項</span></div>
   <div class="summary-body">
     <div class="summary-empty" id="summaryEmpty">尚未選擇任何品項</div>
     <div id="summaryList"></div>
@@ -588,32 +253,23 @@
   </div>
 </div>
 
-<!-- Seat Input -->
-<div class="seat-section" style="margin-bottom: 0;">
+<div class="seat-section" style="margin-bottom:0;">
   <div class="divider"><span>座位資訊</span></div>
-  <div style="padding: 0 0 4px;">
+  <div style="padding:0 0 4px;">
+    <div class="seat-label"><span>座位號碼</span><span class="required">*</span></div>
+    <input type="text" id="seatInput" class="seat-input" placeholder="例如：A3、窗邊2號" maxlength="20" autocomplete="off"/>
     <div class="seat-label">
-      <span>座位號碼</span><span class="required">*</span>
+      <span>姓名／稱呼</span>
+      <span style="font-size:11px;color:var(--caramel);font-style:italic;">（選填）</span>
     </div>
-    <input
-      type="text"
-      id="seatInput"
-      class="seat-input"
-      placeholder="例如：A3、窗邊2號"
-      maxlength="20"
-      autocomplete="off"
-    />
+    <input type="text" id="guestInput" class="seat-input" placeholder="例如：小明、Leo" maxlength="20" autocomplete="off" style="margin-bottom:0;"/>
   </div>
 </div>
 
-<!-- Submit Button -->
 <div class="submit-wrap">
-  <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
-    送出訂單
-  </button>
+  <button class="submit-btn" id="submitBtn" onclick="submitOrder()">送出訂單</button>
 </div>
 
-<!-- Success Overlay -->
 <div class="success-overlay" id="successOverlay">
   <div class="success-card">
     <span class="success-icon">🎉</span>
@@ -626,73 +282,134 @@
   </div>
 </div>
 
-<!-- Error Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzC6xOy20Gbrm6Dwfq7yBOENX0q1Hh83PLV-I2kDH6vZzm2lTkOh36CP1FDADH1rmde/exec';
+  // ★ 部署後換成新的 Apps Script URL ★
+  const SCRIPT_URL = '在這裡貼上你的新_Apps_Script_URL';
 
-  const MENU = [
-    { name: '鹽可頌',   price: 60,  emoji: '🥐' },
-    { name: '熱手沖',   price: 140, emoji: '☕' },
-    { name: '蘋果冰美式', price: 160, emoji: '🍎' },
-    { name: '冰花煎餃', price: 200, emoji: '🥟' },
-    { name: '泰奶布丁', price: 200, emoji: '🍮' },
-  ];
-
-  // qty state
-  const qty = {};
-  MENU.forEach(item => qty[item.name] = 0);
-
+  // MENU：從 Apps Script 載入後展開為可訂購的品項
+  let MENU = [];
+  const qty = {};  // displayName → 數量
   let submitted = false;
 
-  // ── Render Menu ──
+  // ── 載入菜單 ──
+  async function loadMenu() {
+    try {
+      const res   = await fetch(SCRIPT_URL + '?action=getMenu');
+      const items = await res.json();
+      MENU = expandItems(items.filter(it => it.enabled));
+      MENU.forEach(it => qty[it.displayName] = 0);
+      renderMenu();
+      renderSummary();
+    } catch (err) {
+      document.getElementById('menuSection').innerHTML = `
+        <div class="menu-error">
+          菜單載入失敗，請確認網路連線<br>
+          <button onclick="loadMenu()">重新載入</button>
+        </div>`;
+    }
+  }
+
+  // 把 hotPrice/coldPrice 展開成獨立品項
+  function expandItems(rawItems) {
+    const result = [];
+    rawItems.forEach(it => {
+      const hasBoth = it.hotPrice && it.coldPrice;
+      if (it.hotPrice) {
+        result.push({
+          displayName: hasBoth ? it.name + '(熱)' : it.name,
+          baseName:    it.name,
+          price:       it.hotPrice,
+          emoji:       it.emoji,
+          category:    it.category,
+          temp:        hasBoth ? '熱' : null
+        });
+      }
+      if (it.coldPrice) {
+        result.push({
+          displayName: hasBoth ? it.name + '(冰)' : it.name,
+          baseName:    it.name,
+          price:       it.coldPrice,
+          emoji:       it.emoji,
+          category:    it.category,
+          temp:        hasBoth ? '冰' : null
+        });
+      }
+      // 無熱/冰價（如洽詢品項）
+      if (!it.hotPrice && !it.coldPrice) {
+        result.push({
+          displayName: it.name,
+          baseName:    it.name,
+          price:       null,
+          emoji:       it.emoji,
+          category:    it.category,
+          temp:        null
+        });
+      }
+    });
+    return result;
+  }
+
+  // ── 渲染菜單 ──
   function renderMenu() {
     const section = document.getElementById('menuSection');
     section.innerHTML = '';
-    MENU.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'menu-item' + (qty[item.name] > 0 ? ' has-qty' : '');
-      div.id = 'item-' + item.name;
-      div.innerHTML = `
-        <div class="item-emoji">${item.emoji}</div>
-        <div class="item-info">
-          <div class="item-name">${item.name}</div>
-          <div class="item-price">NT$ ${item.price}</div>
-        </div>
-        <div class="qty-control">
-          <button class="qty-btn minus" onclick="changeQty('${item.name}', -1)">−</button>
-          <div class="qty-display" id="qty-${item.name}">${qty[item.name]}</div>
-          <button class="qty-btn plus" onclick="changeQty('${item.name}', 1)">+</button>
-        </div>
-      `;
-      section.appendChild(div);
+
+    const categories = [...new Set(MENU.map(it => it.category))];
+
+    categories.forEach(cat => {
+      // 類別標題
+      const header = document.createElement('div');
+      header.className = 'category-header';
+      header.textContent = cat;
+      section.appendChild(header);
+
+      // 品項卡片
+      MENU.filter(it => it.category === cat).forEach((it, _i) => {
+        const idx = MENU.indexOf(it);
+        const div = document.createElement('div');
+        div.className = 'menu-item' + (qty[it.displayName] > 0 ? ' has-qty' : '');
+        div.id = 'item-' + idx;
+
+        const tempBadge = it.temp
+          ? `<span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>`
+          : '';
+        const priceStr = it.price ? `NT$ ${it.price}` : '洽詢';
+
+        div.innerHTML = `
+          <div class="item-emoji">${it.emoji}</div>
+          <div class="item-info">
+            <div class="item-name">${it.baseName} ${tempBadge}</div>
+            <div class="item-price">${priceStr}</div>
+          </div>
+          <div class="qty-control">
+            <button class="qty-btn minus" onclick="changeQty(${idx},-1)">−</button>
+            <div class="qty-display" id="qty-${idx}">${qty[it.displayName]}</div>
+            <button class="qty-btn plus" onclick="changeQty(${idx},1)" ${!it.price ? 'disabled style="opacity:0.35;"' : ''}>+</button>
+          </div>`;
+        section.appendChild(div);
+      });
     });
   }
 
-  // ── Change Quantity ──
-  function changeQty(name, delta) {
-    qty[name] = Math.max(0, qty[name] + delta);
-    document.getElementById('qty-' + name).textContent = qty[name];
-
-    const itemEl = document.getElementById('item-' + name);
-    if (qty[name] > 0) {
-      itemEl.classList.add('has-qty');
-    } else {
-      itemEl.classList.remove('has-qty');
-    }
-
+  // ── 數量控制 ──
+  function changeQty(idx, delta) {
+    const it = MENU[idx];
+    qty[it.displayName] = Math.max(0, (qty[it.displayName] || 0) + delta);
+    document.getElementById('qty-' + idx).textContent = qty[it.displayName];
+    document.getElementById('item-' + idx).classList.toggle('has-qty', qty[it.displayName] > 0);
     renderSummary();
   }
 
-  // ── Render Summary ──
+  // ── 訂單摘要 ──
   function renderSummary() {
-    const list = document.getElementById('summaryList');
-    const empty = document.getElementById('summaryEmpty');
+    const list    = document.getElementById('summaryList');
+    const empty   = document.getElementById('summaryEmpty');
     const totalEl = document.getElementById('summaryTotal');
-    const totalAmt = document.getElementById('totalAmount');
+    const totalAmt= document.getElementById('totalAmount');
 
-    const selected = MENU.filter(item => qty[item.name] > 0);
+    const selected = MENU.filter(it => qty[it.displayName] > 0);
     list.innerHTML = '';
 
     if (selected.length === 0) {
@@ -702,18 +419,14 @@
       empty.style.display = 'none';
       totalEl.style.display = 'flex';
       let total = 0;
-      selected.forEach(item => {
-        const subtotal = item.price * qty[item.name];
+      selected.forEach(it => {
+        const subtotal = it.price * qty[it.displayName];
         total += subtotal;
         const row = document.createElement('div');
         row.className = 'summary-row';
         row.innerHTML = `
-          <span>
-            <span class="qty-tag">×${qty[item.name]}</span>
-            ${item.name}
-          </span>
-          <span class="row-price">NT$ ${subtotal}</span>
-        `;
+          <span><span class="qty-tag">×${qty[it.displayName]}</span>${it.displayName}</span>
+          <span class="row-price">NT$ ${subtotal}</span>`;
         list.appendChild(row);
       });
       totalAmt.textContent = total;
@@ -722,66 +435,52 @@
 
   // ── Toast ──
   function showToast(msg) {
-    const toast = document.getElementById('toast');
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2800);
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
   }
 
-  // ── Submit ──
+  // ── 送出訂單 ──
   async function submitOrder() {
     if (submitted) return;
 
-    const seat = document.getElementById('seatInput').value.trim();
-    const selected = MENU.filter(item => qty[item.name] > 0);
-    const total = selected.reduce((sum, item) => sum + item.price * qty[item.name], 0);
+    const seat      = document.getElementById('seatInput').value.trim();
+    const guestName = document.getElementById('guestInput').value.trim();
+    const selected  = MENU.filter(it => qty[it.displayName] > 0 && it.price);
+    const total     = selected.reduce((s, it) => s + it.price * qty[it.displayName], 0);
 
-    if (selected.length === 0) {
-      showToast('請至少選擇一個品項 🍽️');
-      return;
-    }
+    if (selected.length === 0) { showToast('請至少選擇一個品項 🍽️'); return; }
+    if (!seat) { showToast('請輸入座位號碼 📍'); document.getElementById('seatInput').focus(); return; }
 
-    if (!seat) {
-      showToast('請輸入座位號碼 📍');
-      document.getElementById('seatInput').focus();
-      return;
-    }
-
-    // Disable & show loading
     submitted = true;
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div>`;
+    btn.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
 
     const orderNum = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
-    const payload = {
+    const payload  = {
       seatNumber: seat,
-      items: selected.map(item => ({ name: item.name, quantity: qty[item.name], price: item.price })),
-      totalPrice: total,
-      timestamp: new Date().toISOString(),
-      orderNumber: orderNum
+      guestName:  guestName,
+      items: selected.map(it => ({ name: it.displayName, qty: qty[it.displayName], price: it.price })),
+      totalPrice: total
     };
 
     try {
       await fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
-        // ← 完全不設 headers
-        body: new URLSearchParams({ data: JSON.stringify(payload) })
+        mode:   'no-cors',
+        body:   new URLSearchParams({ data: JSON.stringify(payload) })
       });
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) { /* ignore */ }
 
-    // Show success
     document.getElementById('orderNumber').textContent = orderNum;
     document.getElementById('successOverlay').classList.add('show');
     btn.innerHTML = '訂單已送出 ✓';
   }
 
-  // ── Init ──
-  renderMenu();
-  renderSummary();
+  // ── 初始化 ──
+  loadMenu();
 </script>
 </body>
 </html>
