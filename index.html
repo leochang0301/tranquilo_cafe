@@ -366,9 +366,10 @@
   function loadMenu() {
     const cached = getCache();
     if (cached) {
-      initMenu(cached);
+      initMenu(cached);        // 有快取 → 直接顯示，不打 API
+    } else {
+      fetchAndCache();         // 無快取（新裝置/首次）→ 自動 fetch
     }
-    // 無快取時保留預設的 menu-error 提示，等 Staff 手動更新
   }
 
   async function fetchAndCache() {
