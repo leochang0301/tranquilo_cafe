@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>員工後台 ☕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES & RESET
+    ═══════════════════════════════════════════ */
+    :root {
+      --cream: #fdf6ed;
+      --warm-white: #faf3e8;
+      --tan: #e8d5b7;
+      --caramel: #c8965a;
+      --dark-caramel: #a0723a;
+      --espresso: #3d2314;
+      --dark-brown: #2a1a0e;
+      --rust: #b85c38;
+      --shadow: rgba(61, 35, 20, 0.12);
+      --shadow-deep: rgba(61, 35, 20, 0.22);
+      --green: #4caf50;
+      --green-dark: #2e7d32;
+      --green-bg: rgba(76, 175, 80, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background: var(--dark-brown);
+      color: var(--espresso);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* ═══════════════════════════════════════════
+       APP SHELL
+    ═══════════════════════════════════════════ */
+    .app {
+      width: 100%;
+      max-width: 480px;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: var(--warm-white);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    .header {
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 14px 16px 12px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px var(--shadow-deep);
+      z-index: 50;
+    }
+
+    .header-row1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .header-title {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .last-update {
+      font-size: 0.68rem;
+      color: var(--tan);
+      opacity: 0.7;
+    }
+
+    .btn-refresh {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--caramel);
+      background: transparent;
+      color: var(--caramel);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.3s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .btn-refresh:active {
+      background: var(--caramel);
+      color: var(--espresso);
+      transform: rotate(180deg);
+    }
+
+    /* Clock-in row */
+    .header-row2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .staff-select {
+      flex: 1;
+      min-width: 0;
+      padding: 7px 28px 7px 10px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(200, 150, 90, 0.5);
+      background: rgba(255,255,255,0.08);
+      color: var(--cream);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.84rem;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23c8965a' d='M5 7L0 0h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .staff-select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .staff-select option {
+      background: var(--espresso);
+      color: var(--cream);
+    }
+
+    /* Toggle cluster */
+    .toggle-cluster {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+
+    .status-pill {
+      font-size: 0.68rem;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.12);
+      color: var(--tan);
+      white-space: nowrap;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .status-pill.on {
+      background: rgba(76,175,80,0.3);
+      color: #b8f0b4;
+    }
+
+    .toggle-wrap {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-wrap input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.18);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      top: 3px;
+      left: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .toggle-wrap input:checked + .toggle-track {
+      background: var(--green);
+    }
+
+    .toggle-wrap input:checked + .toggle-track::after {
+      transform: translateX(24px);
+    }
+
+    /* ═══════════════════════════════════════════
+       TAB BAR
+    ═══════════════════════════════════════════ */
+    .tab-bar {
+      display: flex;
+      background: var(--dark-brown);
+      flex-shrink: 0;
+      border-bottom: 2px solid var(--caramel);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 6px 8px;
+      border: none;
+      background: none;
+      color: rgba(232,213,183,0.5);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.78rem;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .tab-btn.active {
+      color: var(--cream);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--caramel);
+      border-radius: 1px;
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      background: var(--rust);
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 0 5px;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+
+    .tab-badge:empty {
+      opacity: 0;
+    }
+
+    .tab-badge.b2 { background: var(--dark-caramel); }
+    .tab-badge.b3 { background: #555; }
+
+    /* ═══════════════════════════════════════════
+       TAB CONTENT AREA
+    ═══════════════════════════════════════════ */
+    .tab-panels {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tab-panel {
+      display: none;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 14px 14px 24px;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════════
+       EMPTY STATES
+    ═══════════════════════════════════════════ */
+    .empty-state {
+      text-align: center;
+      padding: 56px 24px;
+      color: var(--caramel);
+      font-size: 0.95rem;
+      opacity: 0.6;
+      line-height: 2;
+    }
+
+    /* ═══════════════════════════════════════════
+       TAB 1 — PENDING ORDERS
+    ═══════════════════════════════════════════ */
+    .pending-card {
+      border: 2px solid var(--rust);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(184,92,56,0.18);
+      background: #fff9f6;
+    }
+
+    .pending-card-header {
+      background: linear-gradient(130deg, #c0502a 0%, var(--caramel) 100%);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .order-id-badge {
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.22);
+      color: white;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .card-seat {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.92);
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .card-time {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .items-list {
+      /* item rows go here */
+    }
+
+    /* ── Swipeable item row (Tab 1) ── */
+    .item-swipe-row {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--tan);
+    }
+
+    .item-swipe-row:last-child {
+      border-bottom: none;
+    }
+
+    .item-swipe-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      padding-left: 18px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      opacity: 0;
+    }
+
+    .item-swipe-content {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 14px;
+      background: #fff9f6;
+      position: relative;
+      z-index: 1;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      will-change: transform;
+    }
+
+    .item-swipe-content:active { cursor: grabbing; }
+
+    .item-swipe-row.done .item-swipe-content {
+      background: #f5f5f5;
+    }
+
+    .check-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--caramel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+      color: transparent;
+      transition: all 0.25s;
+      background: transparent;
+    }
+
+    .item-swipe-row.done .check-circle {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .item-name {
+      font-size: 0.88rem;
+      color: var(--espresso);
+      flex: 1;
+      transition: color 0.25s, opacity 0.25s;
+      line-height: 1.4;
+    }
+
+    .item-swipe-row.done .item-name {
+      text-decoration: line-through;
+      color: #aaa;
+      opacity: 0.7;
+    }
+
+    .swipe-hint {
+      font-size: 0.67rem;
+      color: var(--caramel);
+      text-align: right;
+      padding: 5px 14px 8px;
+      opacity: 0.55;
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════
+       TAB 2 — READY TO PAY
+    ═══════════════════════════════════════════ */
+
+    /* Card-level swipe wrapper */
+    .card-swipe-outer {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    .card-swipe-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      opacity: 0;
+    }
+
+    .card-swipe-inner {
+      position: relative;
+      z-index: 1;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      will-change: transform;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .card-swipe-inner:active { cursor: grabbing; }
+
+    .ready-card-header {
+      background: linear-gradient(130deg, var(--dark-caramel) 0%, var(--caramel) 100%);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ready-items-body {
+      background: white;
+      padding: 10px 14px 8px;
+    }
+
+    .ready-item-line {
+      font-size: 0.83rem;
+      color: var(--espresso);
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(232,213,183,0.45);
+      line-height: 1.4;
+    }
+
+    .ready-item-line:last-child { border-bottom: none; }
+
+    .card-footer {
+      background: var(--warm-white);
+      border-top: 1px solid var(--tan);
+      padding: 9px 14px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .total-label {
+      font-size: 0.72rem;
+      color: var(--caramel);
+    }
+
+    .total-amount {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--rust);
+    }
+
+    /* ═══════════════════════════════════════════
+       TAB 3 — DAILY LOG
+    ═══════════════════════════════════════════ */
+    .revenue-card {
+      background: var(--espresso);
+      color: var(--cream);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 12px var(--shadow-deep);
+    }
+
+    .revenue-label {
+      font-size: 0.82rem;
+      color: var(--tan);
+    }
+
+    .revenue-count {
+      font-size: 0.7rem;
+      color: rgba(232,213,183,0.5);
+      margin-top: 3px;
+    }
+
+    .revenue-amount {
+      font-family: 'Lora', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--caramel);
+    }
+
+    .log-card {
+      background: white;
+      border: 1px solid var(--tan);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 11px 14px;
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+
+    .log-card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .log-badge {
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--tan);
+      color: var(--espresso);
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+
+    .log-seat {
+      font-size: 0.78rem;
+      color: var(--dark-caramel);
+      flex: 1;
+    }
+
+    .log-time {
+      font-size: 0.7rem;
+      color: rgba(61,35,20,0.45);
+    }
+
+    .log-items-text {
+      font-size: 0.79rem;
+      color: rgba(61,35,20,0.65);
+      line-height: 1.75;
+    }
+
+    .log-total-row {
+      text-align: right;
+      font-weight: 700;
+      color: var(--dark-caramel);
+      font-size: 0.85rem;
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px solid var(--tan);
+    }
+
+    /* ═══════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 11px 22px;
+      border-radius: 24px;
+      font-size: 0.84rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 1000;
+      white-space: nowrap;
+      max-width: 88vw;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.err  { background: var(--rust); }
+    .toast.ok   { background: var(--green-dark); }
+
+    /* ═══════════════════════════════════════════
+       LOADING OVERLAY
+    ═══════════════════════════════════════════ */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(250,243,232,0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      backdrop-filter: blur(1px);
+    }
+
+    .loading-overlay.show { display: flex; }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid var(--tan);
+      border-top-color: var(--caramel);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ── Loading Overlay ── -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- ══════════════════════════════
+       HEADER
+  ══════════════════════════════ -->
+  <div class="header">
+    <div class="header-row1">
+      <div class="header-title">☕ 員工後台</div>
+      <div class="header-right">
+        <span class="last-update" id="lastUpdate">──</span>
+        <button class="btn-refresh" id="btnRefresh" title="重新整理">↻</button>
+      </div>
+    </div>
+    <div class="header-row2">
+      <select class="staff-select" id="staffSelect">
+        <option value="">── 載入中 ──</option>
+      </select>
+      <div class="toggle-cluster">
+        <span class="status-pill" id="statusPill">下班中</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="workToggle">
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       TAB BAR
+  ══════════════════════════════ -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="1">
+      待製作
+      <span class="tab-badge b1" id="badge1"></span>
+    </button>
+    <button class="tab-btn" data-tab="2">
+      出餐完成
+      <span class="tab-badge b2" id="badge2"></span>
+    </button>
+    <button class="tab-btn" data-tab="3">
+      當日 Log
+      <span class="tab-badge b3" id="badge3"></span>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════
+       TAB PANELS
+  ══════════════════════════════ -->
+  <div class="tab-panels">
+
+    <!-- Tab 1 -->
+    <div class="tab-panel active" id="panel1">
+      <div class="empty-state" id="emptyPending">請先上班打卡 ☕</div>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="tab-panel" id="panel2">
+      <div class="empty-state">暫無待結帳訂單</div>
+    </div>
+
+    <!-- Tab 3 -->
+    <div class="tab-panel" id="panel3">
+      <div class="empty-state">今日尚無結帳記錄</div>
+    </div>
+
+  </div>
+
+</div><!-- /.app -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─────────────────────────────────────────
+   CONFIG
+───────────────────────────────────────── */
+const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
+const POLL_MS        = 30000;   // 30 秒
+const SWIPE_THRESH   = 80;      // px
+
+/* ─────────────────────────────────────────
+   STATE
+───────────────────────────────────────── */
+let workStatus   = 'off';          // 'on' | 'off'
+let selectedStaff = '';
+let allOrders    = [];             // from getOrders (incomplete orders)
+let todayLog     = [];             // 已結帳 (local session + optional server fetch)
+let itemDoneMap  = {};             // { orderId: [bool, bool, ...] }
+let pollTimer    = null;
+let currentTab   = 1;
+let toastTimer   = null;
+
+/* ─────────────────────────────────────────
+   API HELPERS
+───────────────────────────────────────── */
+async function apiGet(action) {
+  const res = await fetch(`${SCRIPT_URL}?action=${action}&_=${Date.now()}`);
+  if (!res.ok) throw new Error(`GET ${action} → HTTP ${res.status}`);
+  return res.json();
+}
+
+async function apiPost(payload) {
+  const fd = new FormData();
+  fd.append('data', JSON.stringify(payload));
+  const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd });
+  if (!res.ok) throw new Error(`POST ${payload.action} → HTTP ${res.status}`);
+  return res.json();
+}
+
+/* ─────────────────────────────────────────
+   INIT
+───────────────────────────────────────── */
+window.addEventListener('load', async () => {
+  loadStaff();
+  tryFetchTodayLog();
+  renderTab(currentTab);
+
+  // tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(parseInt(btn.dataset.tab)));
+  });
+
+  // toggle
+  document.getElementById('workToggle').addEventListener('change', handleWorkToggle);
+
+  // refresh button
+  document.getElementById('btnRefresh').addEventListener('click', manualRefresh);
+});
+
+async function loadStaff() {
+  try {
+    const list = await apiGet('getStaff');
+    const sel  = document.getElementById('staffSelect');
+    sel.innerHTML = '<option value="">── 選擇員工 ──</option>';
+    (Array.isArray(list) ? list : []).forEach(name => {
+      if (!name) return;
+      const o = document.createElement('option');
+      o.value = o.textContent = String(name).trim();
+      sel.appendChild(o);
+    });
+  } catch (e) {
+    document.getElementById('staffSelect').innerHTML = '<option value="">⚠ 無法載入</option>';
+  }
+}
+
+async function tryFetchTodayLog() {
+  try {
+    const data = await apiGet('getTodayOrders');
+    todayLog = Array.isArray(data) ? data : [];
+    updateBadges();
+    if (currentTab === 3) renderTab3();
+  } catch (_) {
+    /* getTodayOrders 尚未部署時靜默略過，Tab 3 靠本地累積 */
+  }
+}
+
+/* ─────────────────────────────────────────
+   CLOCK IN / OUT
+───────────────────────────────────────── */
+async function handleWorkToggle() {
+  const toggle = document.getElementById('workToggle');
+  const staff  = document.getElementById('staffSelect').value;
+
+  if (!staff) {
+    toggle.checked = !toggle.checked; // revert
+    showToast('請先選擇員工姓名 👆');
+    return;
+  }
+
+  const type = toggle.checked ? 'in' : 'out';
+  showLoading(true);
+
+  try {
+    await apiPost({
+      action:    'clockIn',
+      staffName: staff,
+      type,
+      timestamp: new Date().toISOString()
+    });
+
+    selectedStaff = staff;
+    workStatus    = toggle.checked ? 'on' : 'off';
+
+    // update UI
+    const pill = document.getElementById('statusPill');
+    pill.textContent = workStatus === 'on' ? '上班中' : '下班中';
+    pill.className   = 'status-pill' + (workStatus === 'on' ? ' on' : '');
+    document.getElementById('staffSelect').disabled = (workStatus === 'on');
+
+    if (workStatus === 'on') {
+      startPolling();
+      await fetchOrders();
+    } else {
+      stopPolling();
+      allOrders = [];
+      updateBadges();
+      renderTab(currentTab);
+    }
+
+    showToast(
+      type === 'in' ? `✓ ${staff} 上班打卡` : `✓ ${staff} 下班打卡`,
+      'ok'
+    );
+  } catch (e) {
+    toggle.checked = !toggle.checked; // revert
+    showToast('打卡失敗，請重試', 'err');
+  } finally {
+    showLoading(false);
+  }
+}
+
+/* ─────────────────────────────────────────
+   POLLING
+───────────────────────────────────────── */
+function startPolling() {
+  if (pollTimer) return;
+  pollTimer = setInterval(fetchOrders, POLL_MS);
+}
+
+function stopPolling() {
+  clearInterval(pollTimer);
+  pollTimer = null;
+}
+
+async function fetchOrders() {
+  try {
+    const raw = await apiGet('getOrders');
+    const orders = Array.isArray(raw) ? raw : [];
+
+    // init itemDoneMap for brand-new orders
+    orders.forEach(o => {
+      if (!itemDoneMap[o.orderId]) {
+        itemDoneMap[o.orderId] = parseItems(o.items).map(() => false);
+      }
+    });
+
+    allOrders = orders;
+    updateLastUpdated();
+    updateBadges();
+    renderTab(currentTab);
+  } catch (e) {
+    showToast('訂單更新失敗', 'err');
+  }
+}
+
+async function manualRefresh() {
+  showLoading(true);
+  try {
+    if (workStatus === 'on') await fetchOrders();
+    await tryFetchTodayLog();
+    updateLastUpdated();
+    renderTab(currentTab);
+    showToast('已更新');
+  } catch (_) {
+  } finally {
+    showLoading(false);
+  }
+}
+
+/* ─────────────────────────────────────────
+   TAB SWITCHING
+───────────────────────────────────────── */
+function switchTab(n) {
+  currentTab = n;
+  document.querySelectorAll('.tab-btn').forEach((b, i) =>
+    b.classList.toggle('active', i + 1 === n));
+  document.querySelectorAll('.tab-panel').forEach((p, i) =>
+    p.classList.toggle('active', i + 1 === n));
+  renderTab(n);
+}
+
+function renderTab(n) {
+  if (n === 1) renderTab1();
+  else if (n === 2) renderTab2();
+  else renderTab3();
+}
+
+function updateBadges() {
+  const n1 = allOrders.filter(o => o.status === '待製作').length;
+  const n2 = allOrders.filter(o => o.status === '完成' && o.payStatus === '未結帳').length;
+  const n3 = todayLog.length;
+  document.getElementById('badge1').textContent = n1 || '';
+  document.getElementById('badge2').textContent = n2 || '';
+  document.getElementById('badge3').textContent = n3 || '';
+}
+
+/* ─────────────────────────────────────────
+   TAB 1 — 待製作
+───────────────────────────────────────── */
+function renderTab1() {
+  const panel  = document.getElementById('panel1');
+  const orders = allOrders.filter(o => o.status === '待製作');
+
+  if (workStatus === 'off') {
+    panel.innerHTML = '<div class="empty-state">請先上班打卡 ☕</div>';
+    return;
+  }
+  if (orders.length === 0) {
+    panel.innerHTML = '<div class="empty-state">目前無待製作訂單 ✓</div>';
+    return;
+  }
+
+  panel.innerHTML = orders.map(o => buildPendingCard(o)).join('');
+
+  // Bind swipe to each item row
+  panel.querySelectorAll('.item-swipe-row').forEach(row => {
+    bindItemSwipe(row);
+  });
+}
+
+function buildPendingCard(order) {
+  const items  = parseItems(order.items);
+  const states = itemDoneMap[order.orderId] || items.map(() => false);
+
+  const rowsHTML = items.map((item, idx) => {
+    const done = states[idx];
+    return `
+      <div class="item-swipe-row${done ? ' done' : ''}"
+           data-order="${esc(order.orderId)}" data-idx="${idx}">
+        <div class="item-swipe-bg">✓ 完成</div>
+        <div class="item-swipe-content">
+          <div class="check-circle">${done ? '✓' : ''}</div>
+          <div class="item-name">${esc(item)}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="pending-card" id="pcard-${esc(order.orderId)}">
+      <div class="pending-card-header">
+        <span class="order-id-badge">${esc(order.orderId)}</span>
+        <span class="card-seat">🪑 ${esc(order.seat)}</span>
+        <span class="card-time">${esc(order.time)}</span>
+      </div>
+      <div class="items-list">${rowsHTML}</div>
+      <div class="swipe-hint">← 右滑品項標記完成</div>
+    </div>`;
+}
+
+function bindItemSwipe(row) {
+  const orderId = row.dataset.order;
+  const idx     = parseInt(row.dataset.idx, 10);
+  const content = row.querySelector('.item-swipe-content');
+  const bg      = row.querySelector('.item-swipe-bg');
+
+  makeSwipeable(row, content, bg, () => {
+    // ignore if already done
+    if (row.classList.contains('done')) return;
+    handleItemDone(orderId, idx, row, content);
+  });
+}
+
+async function handleItemDone(orderId, idx, row, content) {
+  // local mark immediately
+  if (!itemDoneMap[orderId]) return;
+  itemDoneMap[orderId][idx] = true;
+
+  row.classList.add('done');
+  const circle = row.querySelector('.check-circle');
+  if (circle) circle.textContent = '✓';
+  content.style.transform = 'translateX(0)';
+
+  const allDone = itemDoneMap[orderId].every(Boolean);
+  if (!allDone) return;
+
+  // All items done → mark order complete
+  showLoading(true);
+  try {
+    await apiPost({ action: 'updateStatus', orderId, field: 'status', status: '完成' });
+    const o = allOrders.find(x => x.orderId === orderId);
+    if (o) o.status = '完成';
+    showToast(`${orderId} 製作完成，準備出餐 🍽️`, 'ok');
+    updateBadges();
+    renderTab1();
+  } catch (e) {
+    showToast('狀態更新失敗，請重試', 'err');
+    // revert local state
+    itemDoneMap[orderId][idx] = false;
+    renderTab1();
+  } finally {
+    showLoading(false);
+  }
+}
+
+/* ─────────────────────────────────────────
+   TAB 2 — 出餐完成（待結帳）
+───────────────────────────────────────── */
+function renderTab2() {
+  const panel  = document.getElementById('panel2');
+  const orders = allOrders.filter(o => o.status === '完成' && o.payStatus === '未結帳');
+
+  if (orders.length === 0) {
+    panel.innerHTML = '<div class="empty-state">暫無待結帳訂單</div>';
+    return;
+  }
+
+  panel.innerHTML = orders.map(o => buildReadyCard(o)).join('');
+
+  panel.querySelectorAll('.card-swipe-outer').forEach(wrapper => {
+    const orderId = wrapper.dataset.order;
+    const inner   = wrapper.querySelector('.card-swipe-inner');
+    const bg      = wrapper.querySelector('.card-swipe-bg');
+    makeSwipeable(wrapper, inner, bg, () => handleOrderPaid(orderId));
+  });
+}
+
+function buildReadyCard(order) {
+  const items = parseItems(order.items);
+  const rowsHTML = items.map(i => `<div class="ready-item-line">${esc(i)}</div>`).join('');
+
+  return `
+    <div class="card-swipe-outer" data-order="${esc(order.orderId)}">
+      <div class="card-swipe-bg">💳 結帳完成 ✓</div>
+      <div class="card-swipe-inner">
+        <div class="ready-card-header">
+          <span class="order-id-badge">${esc(order.orderId)}</span>
+          <span class="card-seat" style="color:rgba(255,255,255,.92)">🪑 ${esc(order.seat)}</span>
+          <span class="card-time">${esc(order.time)}</span>
+        </div>
+        <div class="ready-items-body">${rowsHTML}</div>
+        <div class="card-footer">
+          <span class="total-label">訂單金額</span>
+          <span class="total-amount">$${esc(order.totalPrice)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="swipe-hint" style="margin-bottom:6px">← 右滑整張卡片完成結帳</div>`;
+}
+
+async function handleOrderPaid(orderId) {
+  showLoading(true);
+  try {
+    await apiPost({ action: 'updateStatus', orderId, field: 'payStatus', status: '已結帳' });
+    const i = allOrders.findIndex(o => o.orderId === orderId);
+    if (i !== -1) {
+      const [gone] = allOrders.splice(i, 1);
+      gone.payStatus = '已結帳';
+      todayLog.unshift(gone);   // 最新在最上
+    }
+    showToast(`${orderId} 已結帳 ✓`, 'ok');
+    updateBadges();
+    renderTab2();
+  } catch (e) {
+    showToast('結帳失敗，請重試', 'err');
+  } finally {
+    showLoading(false);
+  }
+}
+
+/* ─────────────────────────────────────────
+   TAB 3 — 當日 Log
+───────────────────────────────────────── */
+function renderTab3() {
+  const panel = document.getElementById('panel3');
+
+  if (todayLog.length === 0) {
+    panel.innerHTML = '<div class="empty-state">今日尚無結帳記錄</div>';
+    return;
+  }
+
+  const total = todayLog.reduce((s, o) => s + (parseFloat(o.totalPrice) || 0), 0);
+
+  const cardsHTML = todayLog.map(o => {
+    const lines = parseItems(o.items).map(i => esc(i)).join('<br>');
+    return `
+      <div class="log-card">
+        <div class="log-card-top">
+          <span class="log-badge">${esc(o.orderId)}</span>
+          <span class="log-seat">🪑 ${esc(o.seat)}</span>
+          <span class="log-time">${esc(o.time)}</span>
+        </div>
+        <div class="log-items-text">${lines}</div>
+        <div class="log-total-row">$${esc(o.totalPrice)}</div>
+      </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="revenue-card">
+      <div>
+        <div class="revenue-label">今日總營業額</div>
+        <div class="revenue-count">${todayLog.length} 筆訂單</div>
+      </div>
+      <div class="revenue-amount">$${total.toLocaleString()}</div>
+    </div>
+    ${cardsHTML}`;
+}
+
+/* ─────────────────────────────────────────
+   SWIPE ENGINE
+   wrapper  : overflow:hidden 容器
+   content  : 實際會位移的元素
+   bg       : 底層綠色提示層
+   callback : 觸發後的 async 函式
+───────────────────────────────────────── */
+function makeSwipeable(wrapper, content, bg, callback) {
+  let startX = 0, deltaX = 0, active = false;
+
+  function getX(e) {
+    return e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  }
+
+  function onStart(e) {
+    if (wrapper.classList.contains('done')) return; // item already done
+    startX = getX(e);
+    deltaX = 0;
+    active = true;
+    content.style.transition = 'none';
+    if (bg) bg.style.transition = 'none';
+  }
+
+  function onMove(e) {
+    if (!active) return;
+    const dx = getX(e) - startX;
+    deltaX = Math.max(0, dx); // right-only
+    if (deltaX === 0) return;
+
+    const progress = Math.min(deltaX / SWIPE_THRESH, 1);
+    content.style.transform = `translateX(${deltaX}px)`;
+    if (bg) bg.style.opacity = progress;
+
+    // prevent vertical scroll during horizontal swipe
+    if (e.cancelable && e.type === 'touchmove' && deltaX > 8) {
+      e.preventDefault();
+    }
+  }
+
+  function onEnd() {
+    if (!active) return;
+    active = false;
+
+    const ease = 'cubic-bezier(0.25, 1, 0.5, 1)';
+    content.style.transition = `transform 0.3s ${ease}`;
+    if (bg) bg.style.transition = `opacity 0.3s ease`;
+
+    if (deltaX >= SWIPE_THRESH) {
+      // fly off screen → callback
+      content.style.transform = `translateX(${wrapper.offsetWidth + 30}px)`;
+      if (bg) bg.style.opacity = '1';
+      setTimeout(() => callback(), 280);
+    } else {
+      // snap back
+      content.style.transform = 'translateX(0)';
+      if (bg) bg.style.opacity = '0';
+    }
+    deltaX = 0;
+  }
+
+  // Touch
+  wrapper.addEventListener('touchstart', onStart, { passive: true });
+  wrapper.addEventListener('touchmove',  onMove,  { passive: false });
+  wrapper.addEventListener('touchend',   onEnd);
+
+  // Mouse (desktop)
+  wrapper.addEventListener('mousedown', onStart);
+  wrapper.addEventListener('mousemove', onMove);
+  wrapper.addEventListener('mouseup',   onEnd);
+  wrapper.addEventListener('mouseleave', onEnd);
+}
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+function parseItems(str) {
+  if (!str) return [];
+  return String(str).split('\n').map(s => s.trim()).filter(Boolean);
+}
+
+function esc(v) {
+  return String(v ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function updateLastUpdated() {
+  const d = new Date();
+  const hms = [d.getHours(), d.getMinutes(), d.getSeconds()]
+    .map(n => String(n).padStart(2, '0')).join(':');
+  document.getElementById('lastUpdate').textContent = `更新 ${hms}`;
+}
+
+function showLoading(v) {
+  document.getElementById('loadingOverlay').classList.toggle('show', v);
+}
+
+function showToast(msg, type = '') {
+  clearTimeout(toastTimer);
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = 'toast show' + (type ? ` ${type}` : '');
+  toastTimer = setTimeout(() => { el.className = 'toast'; }, 2800);
+}
+
+</script>
+</body>
+</html>
