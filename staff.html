@@ -100,34 +100,11 @@
       opacity: 0.7;
     }
 
-    .btn-refresh {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 1.5px solid var(--caramel);
-      background: transparent;
-      color: var(--caramel);
-      font-size: 1rem;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.3s;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    .btn-refresh:active {
-      background: var(--caramel);
-      color: var(--espresso);
-      transform: rotate(180deg);
-    }
-
+    /* Row 2: staff select (compact) + clock-in / clock-out buttons */
     .header-row2 {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .staff-select {
@@ -139,80 +116,36 @@
       background: rgba(255,255,255,0.08);
       color: var(--cream);
       font-family: 'Noto Serif TC', serif;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       appearance: none;
       -webkit-appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%23c8965a' d='M5 7L0 0h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 9px center;
       cursor: pointer;
-      transition: border-color 0.2s;
     }
 
-    .staff-select:disabled { opacity: 0.5; cursor: not-allowed; }
     .staff-select option { background: var(--espresso); color: var(--cream); }
 
-    .toggle-cluster {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+    .btn-clock {
       flex-shrink: 0;
-    }
-
-    .status-pill {
-      font-size: 0.68rem;
-      padding: 3px 9px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.12);
-      color: var(--tan);
-      white-space: nowrap;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .status-pill.on {
-      background: rgba(76,175,80,0.3);
-      color: #b8f0b4;
-    }
-
-    .toggle-wrap {
-      position: relative;
-      width: 50px;
-      height: 26px;
-    }
-
-    .toggle-wrap input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-track {
-      position: absolute;
-      inset: 0;
-      border-radius: 13px;
-      background: rgba(255,255,255,0.18);
+      padding: 7px 13px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: background 0.3s;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s, transform 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
-    .toggle-track::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: white;
-      top: 3px;
-      left: 3px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
-      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    }
+    .btn-clock:active { opacity: 0.75; transform: scale(0.96); }
 
-    .toggle-wrap input:checked + .toggle-track { background: var(--green); }
-    .toggle-wrap input:checked + .toggle-track::after { transform: translateX(24px); }
+    .btn-clock-in  { background: var(--green);  color: white; }
+    .btn-clock-out { background: var(--rust);   color: white; }
 
     /* ═══════════════════════════════════════════
        TAB BAR
@@ -277,6 +210,45 @@
     .tab-badge.b3 { background: #555; }
 
     /* ═══════════════════════════════════════════
+       PULL-TO-REFRESH
+    ═══════════════════════════════════════════ */
+    .ptr-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 52px;
+      font-size: 0.78rem;
+      color: var(--caramel);
+      pointer-events: none;
+      z-index: 10;
+      transform: translateY(-52px);
+      transition: opacity 0.2s;
+      opacity: 0;
+    }
+
+    .ptr-arrow {
+      font-size: 1.1rem;
+      transition: transform 0.25s;
+    }
+
+    .ptr-arrow.ready { transform: rotate(180deg); }
+
+    .ptr-spin {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--tan);
+      border-top-color: var(--caramel);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════
        TAB CONTENT AREA
     ═══════════════════════════════════════════ */
     .tab-panels {
@@ -291,6 +263,7 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       padding: 14px 14px 24px;
+      position: relative;
     }
 
     .tab-panel.active { display: block; }
@@ -343,7 +316,6 @@
       flex: 1;
     }
 
-    /* ── Guest name ── */
     .card-guest {
       font-size: 0.75rem;
       color: rgba(255,255,255,0.75);
@@ -359,7 +331,6 @@
       flex-shrink: 0;
     }
 
-    /* ── Swipeable item row (Tab 1) ── */
     .item-swipe-row {
       position: relative;
       overflow: hidden;
@@ -437,7 +408,6 @@
       opacity: 0.7;
     }
 
-    /* ── Annotation badge ── */
     .item-annot {
       display: inline-block;
       font-size: 0.7rem;
@@ -451,7 +421,6 @@
       vertical-align: middle;
     }
 
-    /* ── Long-press hint icon (for annotatable items) ── */
     .item-annot-icon {
       font-size: 0.72rem;
       opacity: 0.35;
@@ -459,7 +428,6 @@
       cursor: pointer;
     }
 
-    /* ── Card actions row ── */
     .card-actions {
       display: flex;
       align-items: center;
@@ -501,9 +469,8 @@
     .card-swipe-outer {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      margin-bottom: 0;
-      box-shadow: 0 2px 10px var(--shadow);
+      border-radius: 12px 12px 0 0;
+      box-shadow: none;
     }
 
     .card-swipe-bg {
@@ -530,17 +497,18 @@
       -webkit-user-select: none;
       user-select: none;
       will-change: transform;
-      border-radius: 12px;
+      border-radius: 12px 12px 0 0;
       overflow: hidden;
     }
 
     .card-swipe-inner:active { cursor: grabbing; }
 
-    /* Wrapper that groups swipeable card + add-item + hint */
     .ready-card-block {
       margin-bottom: 16px;
       border-radius: 12px;
       box-shadow: 0 2px 10px var(--shadow);
+      border: 1.5px solid var(--tan);
+      overflow: hidden;
     }
 
     .ready-card-header {
@@ -557,6 +525,7 @@
       padding: 10px 14px 8px;
     }
 
+    /* Paid-item strike-through in ready card */
     .ready-item-line {
       font-size: 0.83rem;
       color: var(--espresso);
@@ -567,15 +536,22 @@
 
     .ready-item-line:last-child { border-bottom: none; }
 
+    .ready-item-line.paid-line {
+      text-decoration: line-through;
+      color: #aaa;
+      opacity: 0.7;
+    }
+
     .card-footer {
       background: var(--warm-white);
       border-top: 1px solid var(--tan);
       padding: 9px 14px;
       display: flex;
-      justify-content: flex-end;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
+
+    .footer-left { flex: 1; }
 
     .total-label { font-size: 0.72rem; color: var(--caramel); }
 
@@ -586,11 +562,56 @@
       color: var(--rust);
     }
 
-    /* Extra action row below ready card (outside swipeable area) */
+    .total-amount.striked {
+      font-size: 0.78rem;
+      text-decoration: line-through;
+      color: #aaa;
+      font-weight: 400;
+    }
+
+    .total-remain {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--green-dark);
+    }
+
+    /* Ready card extra action row */
     .card-extra-actions {
+      background: var(--warm-white);
+      border-top: 1px solid var(--tan);
+      padding: 7px 14px 10px;
       display: flex;
-      justify-content: flex-end;
-      padding: 6px 4px 2px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .btn-split-pay {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--dark-caramel);
+      background: none;
+      border: 1.5px solid var(--caramel);
+      border-radius: 10px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-family: 'Noto Serif TC', serif;
+      transition: background 0.15s, color 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .btn-split-pay:active {
+      background: var(--caramel);
+      color: white;
+    }
+
+    .card-swipe-hint {
+      font-size: 0.67rem;
+      color: var(--caramel);
+      opacity: 0.55;
+      font-style: italic;
     }
 
     /* ═══════════════════════════════════════════
@@ -843,6 +864,93 @@
     }
 
     /* ═══════════════════════════════════════════
+       SPLIT-PAY MODAL
+    ═══════════════════════════════════════════ */
+    .split-modal-card {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 22px 20px 36px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      max-height: 85dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .split-item-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--tan);
+    }
+
+    .split-item-row:last-of-type { border-bottom: none; }
+
+    .split-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--caramel);
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: transparent;
+      background: white;
+      transition: all 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .split-checkbox.checked {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: white;
+    }
+
+    .split-item-name {
+      flex: 1;
+      font-size: 0.85rem;
+      color: var(--espresso);
+      line-height: 1.35;
+    }
+
+    .split-item-name.already-paid {
+      text-decoration: line-through;
+      color: #aaa;
+      opacity: 0.65;
+    }
+
+    .split-item-price {
+      font-size: 0.8rem;
+      color: var(--dark-caramel);
+      flex-shrink: 0;
+    }
+
+    .split-subtotal-bar {
+      margin-top: 14px;
+      background: var(--warm-white);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .split-subtotal-label { font-size: 0.8rem; color: var(--caramel); }
+
+    .split-subtotal-amount {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--rust);
+    }
+
+    /* ═══════════════════════════════════════════
        TOAST
     ═══════════════════════════════════════════ */
     .toast {
@@ -916,20 +1024,15 @@
       <div class="header-title">☕ 員工後台</div>
       <div class="header-right">
         <span class="last-update" id="lastUpdate">──</span>
-        <button class="btn-refresh" id="btnRefresh" title="重新整理">↻</button>
       </div>
     </div>
+    <!-- Row 2: compact staff selector + clock-in / clock-out buttons -->
     <div class="header-row2">
       <select class="staff-select" id="staffSelect">
-        <option value="">── 載入中 ──</option>
+        <option value="">── 選擇員工 ──</option>
       </select>
-      <div class="toggle-cluster">
-        <span class="status-pill" id="statusPill">下班中</span>
-        <label class="toggle-wrap">
-          <input type="checkbox" id="workToggle">
-          <span class="toggle-track"></span>
-        </label>
-      </div>
+      <button class="btn-clock btn-clock-in"  id="btnClockIn"  onclick="handleClock('in')">上班</button>
+      <button class="btn-clock btn-clock-out" id="btnClockOut" onclick="handleClock('out')">下班</button>
     </div>
   </div>
 
@@ -954,9 +1057,16 @@
   <!-- ══════════════════════════════
        TAB PANELS
   ══════════════════════════════ -->
-  <div class="tab-panels">
+  <div class="tab-panels" id="tabPanels">
+    <!-- Pull-to-refresh indicator (shared across tabs) -->
+    <div class="ptr-indicator" id="ptrIndicator">
+      <span class="ptr-arrow" id="ptrArrow">↓</span>
+      <span class="ptr-spin"  id="ptrSpin"></span>
+      <span id="ptrText">下拉更新</span>
+    </div>
+
     <div class="tab-panel active" id="panel1">
-      <div class="empty-state">請先上班打卡 ☕</div>
+      <div class="empty-state">載入中…</div>
     </div>
     <div class="tab-panel" id="panel2">
       <div class="empty-state">暫無待結帳訂單</div>
@@ -1012,6 +1122,24 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════
+     SPLIT-PAY MODAL (bottom sheet)
+══════════════════════════════ -->
+<div class="modal-overlay" id="splitPayOverlay" onclick="closeSplitPay()">
+  <div class="split-modal-card" onclick="event.stopPropagation()">
+    <div class="modal-title">分開結帳</div>
+    <div id="splitItemList"></div>
+    <div class="split-subtotal-bar">
+      <span class="split-subtotal-label">本次結帳</span>
+      <span class="split-subtotal-amount" id="splitSubtotal">$0</span>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeSplitPay()">取消</button>
+      <button class="modal-ok" id="btnSplitConfirm" onclick="confirmSplitPay()">先結這筆</button>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════════ -->
@@ -1021,10 +1149,11 @@
 /* ─────────────────────────────────────────
    CONFIG
 ───────────────────────────────────────── */
-const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
-const POLL_MS      = 30000;
-const SWIPE_THRESH = 80;
+const SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
+const POLL_MS       = 30000;
+const SWIPE_THRESH  = 80;
 const LONG_PRESS_MS = 500;
+const PTR_THRESH    = 62; // px to trigger pull-to-refresh
 
 /* ── Annotation options per item keyword ── */
 const ANNOT_MAP = {
@@ -1035,17 +1164,18 @@ const ANNOT_MAP = {
 /* ─────────────────────────────────────────
    STATE
 ───────────────────────────────────────── */
-let workStatus        = 'off';
-let selectedStaff     = '';
-let allOrders         = [];
-let todayLog          = [];
-let itemDoneMap       = {};   // { orderId: [bool, bool, ...] }
-let annotationMap     = {};   // { 'orderId:idx': 'annotation string' }
-let pendingAnnot      = null; // { orderId, idx }
-let addItemTargetId   = null; // orderId for add-item modal
-let pollTimer         = null;
-let currentTab        = 1;
-let toastTimer        = null;
+let selectedStaff   = '';
+let allOrders       = [];
+let itemDoneMap     = {};   // { orderId: [bool, bool, ...] }
+let annotationMap   = {};   // { 'orderId:idx': 'annotation string' }
+let splitPaidMap    = {};   // { orderId: Set<idx> } — indices already partially paid
+let pendingAnnot    = null; // { orderId, idx }
+let addItemTargetId = null;
+let splitPayTargetId = null;
+let splitChecked    = [];   // boolean[] parallel to modal items
+let pollTimer       = null;
+let currentTab      = 1;
+let toastTimer      = null;
 
 /* ─────────────────────────────────────────
    API HELPERS
@@ -1069,14 +1199,14 @@ async function apiPost(payload) {
 ───────────────────────────────────────── */
 window.addEventListener('load', async () => {
   loadStaff();
-  tryFetchTodayLog();
-  renderTab(currentTab);
+  fetchOrders();   // load orders immediately, no clock-in gate
+  startPolling();
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => switchTab(parseInt(btn.dataset.tab)));
   });
-  document.getElementById('workToggle').addEventListener('change', handleWorkToggle);
-  document.getElementById('btnRefresh').addEventListener('click', manualRefresh);
+
+  initPullToRefresh();
 });
 
 async function loadStaff() {
@@ -1095,63 +1225,23 @@ async function loadStaff() {
   }
 }
 
-async function tryFetchTodayLog() {
-  try {
-    const data = await apiGet('getTodayOrders');
-    if (!Array.isArray(data) || data.length === 0) return;
-    // Guard: only accept if data looks like completed/paid orders
-    // (prevents overwrite when getTodayOrders falls through to getOrders)
-    const looksLikePaid = data.every(o => o.payStatus === '已結帳');
-    if (looksLikePaid) {
-      todayLog = data;
-      updateBadges();
-      if (currentTab === 3) renderTab3();
-    }
-  } catch (_) {
-    /* endpoint not yet deployed — Tab 3 relies on local session accumulation */
-  }
-}
-
 /* ─────────────────────────────────────────
-   CLOCK IN / OUT
+   CLOCK IN / OUT  (修改2：改為兩顆按鈕)
 ───────────────────────────────────────── */
-async function handleWorkToggle() {
-  const toggle = document.getElementById('workToggle');
-  const staff  = document.getElementById('staffSelect').value;
-
+async function handleClock(type) {
+  const staff = document.getElementById('staffSelect').value;
   if (!staff) {
-    toggle.checked = !toggle.checked;
     showToast('請先選擇員工姓名 👆');
     return;
   }
 
-  const type = toggle.checked ? 'in' : 'out';
   showLoading(true);
-
   try {
     await apiPost({ action: 'clockIn', staffName: staff, type, timestamp: new Date().toISOString() });
-
     selectedStaff = staff;
-    workStatus    = toggle.checked ? 'on' : 'off';
-
-    const pill = document.getElementById('statusPill');
-    pill.textContent = workStatus === 'on' ? '上班中' : '下班中';
-    pill.className   = 'status-pill' + (workStatus === 'on' ? ' on' : '');
-    document.getElementById('staffSelect').disabled = (workStatus === 'on');
-
-    if (workStatus === 'on') {
-      startPolling();
-      await fetchOrders();
-    } else {
-      stopPolling();
-      allOrders = [];
-      updateBadges();
-      renderTab(currentTab);
-    }
-
-    showToast(type === 'in' ? `✓ ${staff} 上班打卡` : `✓ ${staff} 下班打卡`, 'ok');
+    const label = type === 'in' ? '上班' : '下班';
+    showToast(`✓ ${staff} ${label}打卡`, 'ok');
   } catch (e) {
-    toggle.checked = !toggle.checked;
     showToast('打卡失敗，請重試', 'err');
   } finally {
     showLoading(false);
@@ -1164,11 +1254,6 @@ async function handleWorkToggle() {
 function startPolling() {
   if (pollTimer) return;
   pollTimer = setInterval(fetchOrders, POLL_MS);
-}
-
-function stopPolling() {
-  clearInterval(pollTimer);
-  pollTimer = null;
 }
 
 async function fetchOrders() {
@@ -1191,19 +1276,91 @@ async function fetchOrders() {
   }
 }
 
-async function manualRefresh() {
-  showLoading(true);
-  try {
-    if (workStatus === 'on') await fetchOrders();
-    // Note: intentionally NOT calling tryFetchTodayLog here,
-    // to avoid overwriting local todayLog accumulated this session.
-    updateLastUpdated();
-    renderTab(currentTab);
-    showToast('已更新');
-  } catch (_) {
-  } finally {
-    showLoading(false);
+/* ─────────────────────────────────────────
+   PULL-TO-REFRESH  (修改1)
+───────────────────────────────────────── */
+function initPullToRefresh() {
+  const panelsEl = document.getElementById('tabPanels');
+  const indicator = document.getElementById('ptrIndicator');
+  const arrow  = document.getElementById('ptrArrow');
+  const spin   = document.getElementById('ptrSpin');
+  const label  = document.getElementById('ptrText');
+
+  let startY = 0;
+  let pulling = false;
+  let triggered = false;
+
+  function getActivePanel() {
+    return document.querySelector('.tab-panel.active');
   }
+
+  panelsEl.addEventListener('touchstart', e => {
+    const panel = getActivePanel();
+    if (!panel || panel.scrollTop > 0) return;
+    startY  = e.touches[0].clientY;
+    pulling = true;
+    triggered = false;
+  }, { passive: true });
+
+  panelsEl.addEventListener('touchmove', e => {
+    if (!pulling) return;
+    const panel = getActivePanel();
+    if (!panel || panel.scrollTop > 0) { pulling = false; return; }
+
+    const dy = e.touches[0].clientY - startY;
+    if (dy <= 0) return;
+
+    const clamped = Math.min(dy * 0.45, PTR_THRESH + 20);
+
+    indicator.style.transform = `translateY(${Math.max(clamped - 52, 0)}px)`;
+    indicator.style.opacity   = Math.min(clamped / PTR_THRESH, 1);
+
+    if (clamped >= PTR_THRESH && !triggered) {
+      triggered = true;
+      arrow.classList.add('ready');
+      label.textContent = '放開更新';
+    } else if (clamped < PTR_THRESH) {
+      triggered = false;
+      arrow.classList.remove('ready');
+      label.textContent = '下拉更新';
+    }
+  }, { passive: true });
+
+  panelsEl.addEventListener('touchend', async () => {
+    if (!pulling) return;
+    pulling = false;
+
+    indicator.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+
+    if (triggered) {
+      // Show spinner
+      arrow.style.display = 'none';
+      spin.style.display  = 'block';
+      label.textContent   = '更新中…';
+      indicator.style.transform = 'translateY(0)';
+      indicator.style.opacity   = '1';
+
+      await doRefresh();
+
+      spin.style.display  = 'none';
+      arrow.style.display = 'block';
+      arrow.classList.remove('ready');
+      label.textContent   = '下拉更新';
+    }
+
+    indicator.style.transform = 'translateY(-52px)';
+    indicator.style.opacity   = '0';
+    setTimeout(() => { indicator.style.transition = ''; }, 350);
+  });
+}
+
+async function doRefresh() {
+  try {
+    await fetchOrders();
+    if (currentTab === 3) await fetchTodayLog();
+    updateLastUpdated();
+    showToast('已更新');
+  } catch (_) {}
 }
 
 /* ─────────────────────────────────────────
@@ -1215,7 +1372,9 @@ function switchTab(n) {
     b.classList.toggle('active', i + 1 === n));
   document.querySelectorAll('.tab-panel').forEach((p, i) =>
     p.classList.toggle('active', i + 1 === n));
-  renderTab(n);
+
+  if (n === 3) fetchTodayLog();  // 修改5: 切到 Tab 3 主動拉後端
+  else renderTab(n);
 }
 
 function renderTab(n) {
@@ -1227,10 +1386,8 @@ function renderTab(n) {
 function updateBadges() {
   const n1 = allOrders.filter(o => o.status === '待製作').length;
   const n2 = allOrders.filter(o => o.status === '完成' && o.payStatus === '未結帳').length;
-  const n3 = todayLog.length;
   document.getElementById('badge1').textContent = n1 || '';
   document.getElementById('badge2').textContent = n2 || '';
-  document.getElementById('badge3').textContent = n3 || '';
 }
 
 /* ─────────────────────────────────────────
@@ -1240,10 +1397,6 @@ function renderTab1() {
   const panel  = document.getElementById('panel1');
   const orders = allOrders.filter(o => o.status === '待製作');
 
-  if (workStatus === 'off') {
-    panel.innerHTML = '<div class="empty-state">請先上班打卡 ☕</div>';
-    return;
-  }
   if (orders.length === 0) {
     panel.innerHTML = '<div class="empty-state">目前無待製作訂單 ✓</div>';
     return;
@@ -1320,14 +1473,15 @@ function bindItemSwipe(row) {
   });
 }
 
-async function handleItemDone(orderId, idx, row, content) {
+async function handleItemDone(orderId, idx, row) {
   if (!itemDoneMap[orderId]) return;
   itemDoneMap[orderId][idx] = true;
 
   row.classList.add('done');
   const circle = row.querySelector('.check-circle');
   if (circle) circle.textContent = '✓';
-  content.style.transform = 'translateX(0)';
+  const content = row.querySelector('.item-swipe-content');
+  if (content) content.style.transform = 'translateX(0)';
 
   const allDone = itemDoneMap[orderId].every(Boolean);
   if (!allDone) return;
@@ -1372,12 +1526,32 @@ function renderTab2() {
 }
 
 function buildReadyCard(order) {
-  const items   = parseItems(order.items);
-  const timeStr = formatCardTime(order.date, order.time);
-  const rowsHTML = items.map(i => `<div class="ready-item-line">${esc(i)}</div>`).join('');
+  const items      = parseItems(order.items);
+  const timeStr    = formatCardTime(order.date, order.time);
+  const paidSet    = splitPaidMap[order.orderId] || new Set();
+  const origTotal  = parseFloat(order.totalPrice) || 0;
+
+  // Calculate remaining amount from paid indices
+  let paidAmount = 0;
+  items.forEach((item, idx) => {
+    if (paidSet.has(idx)) {
+      paidAmount += extractItemPrice(item);
+    }
+  });
+  const remain = origTotal - paidAmount;
+
+  const rowsHTML = items.map((item, idx) =>
+    `<div class="ready-item-line${paidSet.has(idx) ? ' paid-line' : ''}">${esc(item)}</div>`
+  ).join('');
 
   const guestHTML = order.guestName
     ? `<span class="card-guest">👤 ${esc(order.guestName)}</span>` : '';
+
+  const priceHTML = paidAmount > 0
+    ? `<span class="total-amount striked">$${origTotal}</span>
+       <span style="color:var(--caramel);margin:0 4px;">→</span>
+       <span class="total-remain">$${remain}</span>`
+    : `<span class="total-amount">$${origTotal}</span>`;
 
   return `
     <div class="ready-card-block">
@@ -1392,28 +1566,32 @@ function buildReadyCard(order) {
           </div>
           <div class="ready-items-body">${rowsHTML}</div>
           <div class="card-footer">
-            <span class="total-label">訂單金額</span>
-            <span class="total-amount">$${esc(order.totalPrice)}</span>
+            <div class="footer-left">
+              <div class="total-label">訂單金額</div>
+              <div style="display:flex;align-items:baseline;gap:4px;margin-top:2px;">${priceHTML}</div>
+            </div>
           </div>
         </div>
       </div>
       <div class="card-extra-actions">
-        <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
+        <button class="btn-split-pay" onclick="openSplitPay('${esc(order.orderId)}')">✂ 分開結帳</button>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
+          <span class="card-swipe-hint">右滑完成結帳 →</span>
+        </div>
       </div>
-      <div class="swipe-hint" style="text-align:right;padding:4px 4px 0">右滑整張卡片完成結帳 →</div>
     </div>`;
 }
 
+/* 修改4: 帶 staffName 給後端 */
 async function handleOrderPaid(orderId) {
+  const staff = document.getElementById('staffSelect').value || selectedStaff || '';
   showLoading(true);
   try {
-    await apiPost({ action: 'updateStatus', orderId, field: 'payStatus', status: '已結帳' });
+    await apiPost({ action: 'updateStatus', orderId, field: 'payStatus', status: '已結帳', staffName: staff });
     const i = allOrders.findIndex(o => o.orderId === orderId);
-    if (i !== -1) {
-      const [gone] = allOrders.splice(i, 1);
-      gone.payStatus = '已結帳';
-      todayLog.unshift(gone);
-    }
+    if (i !== -1) allOrders.splice(i, 1);
+    delete splitPaidMap[orderId];
     showToast(`${orderId} 已結帳 ✓`, 'ok');
     updateBadges();
     renderTab2();
@@ -1425,19 +1603,227 @@ async function handleOrderPaid(orderId) {
 }
 
 /* ─────────────────────────────────────────
-   TAB 3 — 當日 Log
-───────────────────────────────────────── */
+   SPLIT-PAY  (修改3)
+   後端需要 action=splitPay：
+   ─────────────────────────────────────────
+   // Apps Script 樣板（貼到 doPost switch 裡）：
+   // case 'splitPay': {
+   //   const { orderId, paidItems, paidAmount, staffName } = data;
+   //   // paidItems: ['品項A x1 = $80', '品項B x1 = $60']（陣列）
+   //   // paidAmount: 140（數字）
+   //   // 找到對應 row，把已付品項從 items 欄移除（或標記），totalPrice 減去 paidAmount
+   //   // 若 totalPrice 歸零，同時把 payStatus 設為已結帳，結帳欄寫 staffName
+   //   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('POS');
+   //   const rows = sheet.getDataRange().getValues();
+   //   for (let i = 1; i < rows.length; i++) {
+   //     if (rows[i][4] === orderId) {
+   //       const currentItems = String(rows[i][5]).split('\n').filter(Boolean);
+   //       const remaining = currentItems.filter(it => !paidItems.includes(it));
+   //       sheet.getRange(i+1, 6).setValue(remaining.join('\n'));
+   //       const newTotal = (parseFloat(rows[i][6]) || 0) - paidAmount;
+   //       sheet.getRange(i+1, 7).setValue(Math.max(0, newTotal));
+   //       if (newTotal <= 0) {
+   //         sheet.getRange(i+1, 9).setValue(staffName || '已結帳');
+   //         // payStatus 欄位若有另外欄位，請依實際 schema 調整
+   //       }
+   //       break;
+   //     }
+   //   }
+   //   return ContentService.createTextOutput(JSON.stringify({ok:true}))
+   //     .setMimeType(ContentService.MimeType.JSON);
+   // }
+   ───────────────────────────────────────── */
+function openSplitPay(orderId) {
+  splitPayTargetId = orderId;
+  const order  = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  const items   = parseItems(order.items);
+  const paidSet = splitPaidMap[orderId] || new Set();
+
+  splitChecked = items.map(() => false);
+
+  const listEl = document.getElementById('splitItemList');
+  listEl.innerHTML = items.map((item, idx) => {
+    const alreadyPaid = paidSet.has(idx);
+    const price = extractItemPrice(item);
+    return `
+      <div class="split-item-row">
+        <div class="split-checkbox${alreadyPaid ? ' checked' : ''}"
+             data-idx="${idx}"
+             onclick="${alreadyPaid ? '' : `toggleSplitItem(${idx})`}"
+             style="${alreadyPaid ? 'opacity:0.4;cursor:not-allowed;' : ''}">
+          ${alreadyPaid ? '✓' : ''}
+        </div>
+        <div class="split-item-name${alreadyPaid ? ' already-paid' : ''}">${esc(item)}</div>
+        <div class="split-item-price">$${price}</div>
+      </div>`;
+  }).join('');
+
+  updateSplitSubtotal();
+  document.getElementById('splitPayOverlay').classList.add('show');
+}
+
+function toggleSplitItem(idx) {
+  splitChecked[idx] = !splitChecked[idx];
+  const boxes = document.querySelectorAll('#splitItemList .split-checkbox');
+  if (boxes[idx]) {
+    boxes[idx].classList.toggle('checked', splitChecked[idx]);
+    boxes[idx].textContent = splitChecked[idx] ? '✓' : '';
+  }
+  updateSplitSubtotal();
+}
+
+function updateSplitSubtotal() {
+  const order = allOrders.find(o => o.orderId === splitPayTargetId);
+  if (!order) return;
+  const items = parseItems(order.items);
+  const paidSet = splitPaidMap[splitPayTargetId] || new Set();
+  let total = 0;
+  splitChecked.forEach((checked, idx) => {
+    if (checked && !paidSet.has(idx)) {
+      total += extractItemPrice(items[idx]);
+    }
+  });
+  document.getElementById('splitSubtotal').textContent = `$${total}`;
+}
+
+async function confirmSplitPay() {
+  const orderId = splitPayTargetId;
+  const order   = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  const items      = parseItems(order.items);
+  const paidSet    = splitPaidMap[orderId] || new Set();
+  const staff      = document.getElementById('staffSelect').value || selectedStaff || '';
+
+  const selectedItems = [];
+  let   paidAmount    = 0;
+  splitChecked.forEach((checked, idx) => {
+    if (checked && !paidSet.has(idx)) {
+      selectedItems.push(items[idx]);
+      paidAmount += extractItemPrice(items[idx]);
+    }
+  });
+
+  if (selectedItems.length === 0) {
+    showToast('請先勾選要結帳的品項');
+    return;
+  }
+
+  closeSplitPay();
+  showLoading(true);
+
+  try {
+    await apiPost({
+      action: 'splitPay',
+      orderId,
+      paidItems: selectedItems,
+      paidAmount,
+      staffName: staff,
+    });
+
+    // Update local paidSet
+    if (!splitPaidMap[orderId]) splitPaidMap[orderId] = new Set();
+    splitChecked.forEach((checked, idx) => {
+      if (checked && !splitPaidMap[orderId].has(idx)) {
+        splitPaidMap[orderId].add(idx);
+      }
+    });
+
+    // Check if all items are now paid
+    const origTotal = parseFloat(order.totalPrice) || 0;
+    let totalPaid = 0;
+    items.forEach((item, idx) => {
+      if (splitPaidMap[orderId].has(idx)) totalPaid += extractItemPrice(item);
+    });
+
+    showToast(`已結帳 $${paidAmount} ✓`, 'ok');
+
+    if (totalPaid >= origTotal) {
+      // All paid — remove from allOrders
+      const i = allOrders.findIndex(o => o.orderId === orderId);
+      if (i !== -1) allOrders.splice(i, 1);
+      delete splitPaidMap[orderId];
+      showToast(`${orderId} 全部結清 ✓`, 'ok');
+    }
+
+    updateBadges();
+    renderTab2();
+  } catch (e) {
+    showToast('分開結帳失敗，請重試', 'err');
+  } finally {
+    showLoading(false);
+  }
+}
+
+function closeSplitPay() {
+  document.getElementById('splitPayOverlay').classList.remove('show');
+  splitPayTargetId = null;
+  splitChecked = [];
+}
+
+/* ─────────────────────────────────────────
+   TAB 3 — 當日 Log（修改5：從後端讀取）
+   後端需要 getPOSOrders action：
+   ─────────────────────────────────────────
+   // Apps Script 樣板：
+   // case 'getPOSOrders': {
+   //   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('POS');
+   //   const rows  = sheet.getDataRange().getValues();
+   //   const tz    = 'Asia/Taipei';
+   //   const today = Utilities.formatDate(new Date(), tz, 'yyyy/MM/dd');
+   //   const out   = [];
+   //   for (let i = 1; i < rows.length; i++) {
+   //     const rawDate  = rows[i][0];
+   //     const rowDate  = rawDate instanceof Date
+   //       ? Utilities.formatDate(rawDate, tz, 'yyyy/MM/dd')
+   //       : String(rawDate).slice(0,10).replace(/-/g,'/');
+   //     const payStatus = String(rows[i][8] || '');
+   //     // 欄 I (index 8) 寫入非空值即視為已結帳
+   //     if (rowDate === today && payStatus && payStatus !== '未結帳') {
+   //       out.push({
+   //         date: rows[i][0], time: rows[i][1],
+   //         guestName: rows[i][2], seat: rows[i][3],
+   //         orderId: rows[i][4], items: rows[i][5],
+   //         totalPrice: rows[i][6], status: rows[i][7], payStatus
+   //       });
+   //     }
+   //   }
+   //   return ContentService.createTextOutput(JSON.stringify(out.reverse()))
+   //     .setMimeType(ContentService.MimeType.JSON);
+   // }
+   ───────────────────────────────────────── */
+async function fetchTodayLog() {
+  const panel = document.getElementById('panel3');
+  panel.innerHTML = '<div class="empty-state">載入中…</div>';
+
+  try {
+    const raw = await apiGet('getPOSOrders');
+    const log = Array.isArray(raw) ? raw : [];
+    renderTab3WithData(log);
+    document.getElementById('badge3').textContent = log.length || '';
+  } catch (e) {
+    panel.innerHTML = '<div class="empty-state">⚠ 無法載入，請重試</div>';
+  }
+}
+
 function renderTab3() {
+  // Render a loading state; actual fetch triggered by switchTab → fetchTodayLog
+  document.getElementById('panel3').innerHTML = '<div class="empty-state">載入中…</div>';
+}
+
+function renderTab3WithData(log) {
   const panel = document.getElementById('panel3');
 
-  if (todayLog.length === 0) {
+  if (log.length === 0) {
     panel.innerHTML = '<div class="empty-state">今日尚無結帳記錄</div>';
     return;
   }
 
-  const total = todayLog.reduce((s, o) => s + (parseFloat(o.totalPrice) || 0), 0);
+  const total = log.reduce((s, o) => s + (parseFloat(o.totalPrice) || 0), 0);
 
-  const cardsHTML = todayLog.map(o => {
+  const cardsHTML = log.map(o => {
     const lines   = parseItems(o.items).map(i => esc(i)).join('<br>');
     const timeStr = formatCardTime(o.date, o.time);
     const guestHTML = o.guestName
@@ -1459,7 +1845,7 @@ function renderTab3() {
     <div class="revenue-card">
       <div>
         <div class="revenue-label">今日總營業額</div>
-        <div class="revenue-count">${todayLog.length} 筆訂單</div>
+        <div class="revenue-count">${log.length} 筆訂單</div>
       </div>
       <div class="revenue-amount">$${total.toLocaleString()}</div>
     </div>
@@ -1514,9 +1900,6 @@ function closeAnnotMenu() {
 
 /* ─────────────────────────────────────────
    ADD-ITEM MODAL
-   ⚠ Requires Apps Script action=addItem:
-     addItem(data) reads data.orderId, data.itemName, data.qty, data.itemPrice
-     → appends to items cell, updates totalPrice
 ───────────────────────────────────────── */
 function openAddItem(orderId) {
   addItemTargetId = orderId;
@@ -1547,7 +1930,6 @@ async function confirmAddItem() {
   try {
     await apiPost({ action: 'addItem', orderId, itemName: name, qty, itemPrice: price });
 
-    // Update local state immediately
     const order = allOrders.find(o => o.orderId === orderId);
     if (order) {
       const newLine = `${name} x${qty} = $${price * qty}`;
@@ -1572,16 +1954,7 @@ function bindLongPress(el, callback) {
   let timer = null;
   let moved = false;
 
-  function start(e) {
-    moved = false;
-    timer = setTimeout(() => {
-      if (!moved) {
-        if (navigator.vibrate) navigator.vibrate(30);
-        callback(e);
-      }
-    }, LONG_PRESS_MS);
-  }
-
+  function start() { moved = false; timer = setTimeout(() => { if (!moved) { if (navigator.vibrate) navigator.vibrate(30); callback(); } }, LONG_PRESS_MS); }
   function cancel() { clearTimeout(timer); timer = null; }
   function move()   { moved = true; cancel(); }
 
@@ -1601,15 +1974,11 @@ function bindLongPress(el, callback) {
 function makeSwipeable(wrapper, content, bg, callback) {
   let startX = 0, deltaX = 0, active = false;
 
-  function getX(e) {
-    return e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-  }
+  function getX(e) { return e.type.includes('touch') ? e.touches[0].clientX : e.clientX; }
 
   function onStart(e) {
     if (wrapper.classList.contains('done')) return;
-    startX = getX(e);
-    deltaX = 0;
-    active = true;
+    startX = getX(e); deltaX = 0; active = true;
     content.style.transition = 'none';
     if (bg) bg.style.transition = 'none';
   }
@@ -1630,7 +1999,7 @@ function makeSwipeable(wrapper, content, bg, callback) {
     active = false;
     const ease = 'cubic-bezier(0.25, 1, 0.5, 1)';
     content.style.transition = `transform 0.3s ${ease}`;
-    if (bg) bg.style.transition = `opacity 0.3s ease`;
+    if (bg) bg.style.transition = 'opacity 0.3s ease';
 
     if (deltaX >= SWIPE_THRESH) {
       content.style.transform = `translateX(${wrapper.offsetWidth + 30}px)`;
@@ -1669,40 +2038,37 @@ function esc(v) {
 }
 
 /**
- * Format order date+time for display as "MM/DD HH:MM" (GMT+8).
- * Google Sheets sometimes serializes date/time cells as ISO strings
- * (e.g. time-only → "1899-12-30T06:19:00.000Z", date → "2026-04-04T16:00:00.000Z").
- * We add 8 hours to convert UTC → GMT+8.
+ * Try to extract price from item string like "拿鐵 x1 = $120".
+ * Falls back to 0 if pattern not found.
  */
+function extractItemPrice(itemStr) {
+  const m = String(itemStr).match(/\$(\d+(?:\.\d+)?)$/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
 function formatCardTime(dateRaw, timeRaw) {
   const dStr = String(dateRaw || '');
   const tStr = String(timeRaw || '');
 
   let month = '', day = '', hour = '', minute = '';
 
-  /* ── Parse time ── */
   if (tStr.includes('T')) {
-    // ISO from Sheets (e.g. "1899-12-30T06:19:00.000Z")
-    const t   = new Date(tStr);
+    const t    = new Date(tStr);
     const gmt8 = new Date(t.getTime() + 8 * 3600 * 1000);
     hour   = String(gmt8.getUTCHours()).padStart(2, '0');
     minute = String(gmt8.getUTCMinutes()).padStart(2, '0');
   } else {
-    // Plain "HH:mm"
     const parts = tStr.split(':');
     hour   = (parts[0] || '00').padStart(2, '0');
     minute = (parts[1] || '00').padStart(2, '0');
   }
 
-  /* ── Parse date ── */
   if (dStr.includes('T')) {
-    // ISO from Sheets (e.g. "2026-04-04T16:00:00.000Z" = Apr 5 in GMT+8)
     const d    = new Date(dStr);
     const gmt8 = new Date(d.getTime() + 8 * 3600 * 1000);
     month = String(gmt8.getUTCMonth() + 1).padStart(2, '0');
     day   = String(gmt8.getUTCDate()).padStart(2, '0');
   } else if (dStr.includes('/') || dStr.includes('-')) {
-    // "yyyy/MM/dd" or "yyyy-MM-dd"
     const parts = dStr.replace(/-/g, '/').split('/');
     if (parts.length === 3) {
       month = parts[1].padStart(2, '0');
