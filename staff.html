@@ -1302,7 +1302,7 @@ function buildPendingCard(order) {
       </div>
       <div class="items-list">${rowsHTML}</div>
       <div class="card-actions">
-        <span class="swipe-hint">← 右滑品項標記完成</span>
+        <span class="swipe-hint">右滑品項標記完成 →</span>
         <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
       </div>
     </div>`;
@@ -1400,7 +1400,7 @@ function buildReadyCard(order) {
       <div class="card-extra-actions">
         <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
       </div>
-      <div class="swipe-hint" style="text-align:right;padding:4px 4px 0">← 右滑整張卡片完成結帳</div>
+      <div class="swipe-hint" style="text-align:right;padding:4px 4px 0">右滑整張卡片完成結帳 →</div>
     </div>`;
 }
 
