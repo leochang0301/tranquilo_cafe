@@ -124,7 +124,6 @@
       transform: rotate(180deg);
     }
 
-    /* Clock-in row */
     .header-row2 {
       display: flex;
       align-items: center;
@@ -150,17 +149,9 @@
       transition: border-color 0.2s;
     }
 
-    .staff-select:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .staff-select:disabled { opacity: 0.5; cursor: not-allowed; }
+    .staff-select option { background: var(--espresso); color: var(--cream); }
 
-    .staff-select option {
-      background: var(--espresso);
-      color: var(--cream);
-    }
-
-    /* Toggle cluster */
     .toggle-cluster {
       display: flex;
       align-items: center;
@@ -220,13 +211,8 @@
       transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
     }
 
-    .toggle-wrap input:checked + .toggle-track {
-      background: var(--green);
-    }
-
-    .toggle-wrap input:checked + .toggle-track::after {
-      transform: translateX(24px);
-    }
+    .toggle-wrap input:checked + .toggle-track { background: var(--green); }
+    .toggle-wrap input:checked + .toggle-track::after { transform: translateX(24px); }
 
     /* ═══════════════════════════════════════════
        TAB BAR
@@ -257,9 +243,7 @@
       user-select: none;
     }
 
-    .tab-btn.active {
-      color: var(--cream);
-    }
+    .tab-btn.active { color: var(--cream); }
 
     .tab-btn.active::after {
       content: '';
@@ -288,10 +272,7 @@
       transition: opacity 0.2s;
     }
 
-    .tab-badge:empty {
-      opacity: 0;
-    }
-
+    .tab-badge:empty { opacity: 0; }
     .tab-badge.b2 { background: var(--dark-caramel); }
     .tab-badge.b3 { background: #555; }
 
@@ -312,13 +293,8 @@
       padding: 14px 14px 24px;
     }
 
-    .tab-panel.active {
-      display: block;
-    }
+    .tab-panel.active { display: block; }
 
-    /* ═══════════════════════════════════════════
-       EMPTY STATES
-    ═══════════════════════════════════════════ */
     .empty-state {
       text-align: center;
       padding: 56px 24px;
@@ -346,6 +322,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .order-id-badge {
@@ -356,6 +333,7 @@
       color: white;
       padding: 3px 9px;
       border-radius: 6px;
+      flex-shrink: 0;
     }
 
     .card-seat {
@@ -365,13 +343,20 @@
       flex: 1;
     }
 
+    /* ── Guest name ── */
+    .card-guest {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.15);
+      padding: 2px 7px;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
     .card-time {
       font-size: 0.72rem;
       color: rgba(255,255,255,0.65);
-    }
-
-    .items-list {
-      /* item rows go here */
+      flex-shrink: 0;
     }
 
     /* ── Swipeable item row (Tab 1) ── */
@@ -381,9 +366,7 @@
       border-bottom: 1px solid var(--tan);
     }
 
-    .item-swipe-row:last-child {
-      border-bottom: none;
-    }
+    .item-swipe-row:last-child { border-bottom: none; }
 
     .item-swipe-bg {
       position: absolute;
@@ -417,10 +400,7 @@
     }
 
     .item-swipe-content:active { cursor: grabbing; }
-
-    .item-swipe-row.done .item-swipe-content {
-      background: #f5f5f5;
-    }
+    .item-swipe-row.done .item-swipe-content { background: #f5f5f5; }
 
     .check-circle {
       width: 22px;
@@ -457,25 +437,72 @@
       opacity: 0.7;
     }
 
+    /* ── Annotation badge ── */
+    .item-annot {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--caramel);
+      color: white;
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-left: 6px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    /* ── Long-press hint icon (for annotatable items) ── */
+    .item-annot-icon {
+      font-size: 0.72rem;
+      opacity: 0.35;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* ── Card actions row ── */
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 14px 8px;
+      background: #fff9f6;
+    }
+
     .swipe-hint {
       font-size: 0.67rem;
       color: var(--caramel);
-      text-align: right;
-      padding: 5px 14px 8px;
       opacity: 0.55;
       font-style: italic;
+    }
+
+    .btn-add-item {
+      font-size: 0.72rem;
+      color: var(--caramel);
+      background: none;
+      border: 1px solid var(--tan);
+      border-radius: 10px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-family: 'Noto Serif TC', serif;
+      transition: background 0.15s, color 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .btn-add-item:active {
+      background: var(--caramel);
+      color: white;
+      border-color: var(--caramel);
     }
 
     /* ═══════════════════════════════════════════
        TAB 2 — READY TO PAY
     ═══════════════════════════════════════════ */
-
-    /* Card-level swipe wrapper */
     .card-swipe-outer {
       position: relative;
       overflow: hidden;
       border-radius: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 0;
       box-shadow: 0 2px 10px var(--shadow);
     }
 
@@ -509,12 +536,20 @@
 
     .card-swipe-inner:active { cursor: grabbing; }
 
+    /* Wrapper that groups swipeable card + add-item + hint */
+    .ready-card-block {
+      margin-bottom: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
     .ready-card-header {
       background: linear-gradient(130deg, var(--dark-caramel) 0%, var(--caramel) 100%);
       padding: 10px 14px;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .ready-items-body {
@@ -542,16 +577,20 @@
       gap: 6px;
     }
 
-    .total-label {
-      font-size: 0.72rem;
-      color: var(--caramel);
-    }
+    .total-label { font-size: 0.72rem; color: var(--caramel); }
 
     .total-amount {
       font-family: 'Lora', serif;
       font-weight: 700;
       font-size: 1.1rem;
       color: var(--rust);
+    }
+
+    /* Extra action row below ready card (outside swipeable area) */
+    .card-extra-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 6px 4px 2px;
     }
 
     /* ═══════════════════════════════════════════
@@ -569,16 +608,8 @@
       box-shadow: 0 3px 12px var(--shadow-deep);
     }
 
-    .revenue-label {
-      font-size: 0.82rem;
-      color: var(--tan);
-    }
-
-    .revenue-count {
-      font-size: 0.7rem;
-      color: rgba(232,213,183,0.5);
-      margin-top: 3px;
-    }
+    .revenue-label { font-size: 0.82rem; color: var(--tan); }
+    .revenue-count { font-size: 0.7rem; color: rgba(232,213,183,0.5); margin-top: 3px; }
 
     .revenue-amount {
       font-family: 'Lora', serif;
@@ -601,6 +632,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 7px;
+      flex-wrap: wrap;
     }
 
     .log-badge {
@@ -612,22 +644,9 @@
       border-radius: 5px;
     }
 
-    .log-seat {
-      font-size: 0.78rem;
-      color: var(--dark-caramel);
-      flex: 1;
-    }
-
-    .log-time {
-      font-size: 0.7rem;
-      color: rgba(61,35,20,0.45);
-    }
-
-    .log-items-text {
-      font-size: 0.79rem;
-      color: rgba(61,35,20,0.65);
-      line-height: 1.75;
-    }
+    .log-seat { font-size: 0.78rem; color: var(--dark-caramel); flex: 1; }
+    .log-time { font-size: 0.7rem; color: rgba(61,35,20,0.45); }
+    .log-items-text { font-size: 0.79rem; color: rgba(61,35,20,0.65); line-height: 1.75; }
 
     .log-total-row {
       text-align: right;
@@ -637,6 +656,190 @@
       margin-top: 7px;
       padding-top: 7px;
       border-top: 1px solid var(--tan);
+    }
+
+    /* ═══════════════════════════════════════════
+       ANNOTATION MENU (bottom sheet)
+    ═══════════════════════════════════════════ */
+    .annot-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42,26,14,0.5);
+      z-index: 500;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .annot-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+
+    .annot-menu {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 20px 32px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .annot-title {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--espresso);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .annot-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .annot-option {
+      padding: 12px 6px;
+      border: 1.5px solid var(--tan);
+      border-radius: 10px;
+      background: white;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      color: var(--espresso);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .annot-option:active,
+    .annot-option.selected {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      color: white;
+    }
+
+    .annot-row2 {
+      display: flex;
+      gap: 8px;
+    }
+
+    .annot-clear {
+      flex: 1;
+      padding: 12px;
+      border: 1.5px solid var(--tan);
+      border-radius: 10px;
+      background: white;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      color: rgba(61,35,20,0.45);
+      cursor: pointer;
+    }
+
+    .annot-cancel {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--espresso);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85rem;
+      color: var(--cream);
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════════
+       ADD-ITEM MODAL
+    ═══════════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42,26,14,0.5);
+      z-index: 500;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+
+    .modal-card {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 22px 20px 36px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .modal-title {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--espresso);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .modal-field { margin-bottom: 12px; }
+
+    .modal-label {
+      font-size: 0.75rem;
+      color: var(--caramel);
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--tan);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Noto Serif TC', serif;
+      color: var(--espresso);
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-input:focus { border-color: var(--caramel); }
+
+    .modal-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-row .modal-field { flex: 1; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .modal-cancel {
+      flex: 1;
+      padding: 13px;
+      border: 1.5px solid var(--tan);
+      border-radius: 12px;
+      background: white;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.9rem;
+      color: var(--espresso);
+      cursor: pointer;
+    }
+
+    .modal-ok {
+      flex: 1;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: var(--espresso);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--cream);
+      cursor: pointer;
     }
 
     /* ═══════════════════════════════════════════
@@ -690,7 +893,9 @@
       animation: spin 0.75s linear infinite;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
 
   </style>
 </head>
@@ -750,28 +955,62 @@
        TAB PANELS
   ══════════════════════════════ -->
   <div class="tab-panels">
-
-    <!-- Tab 1 -->
     <div class="tab-panel active" id="panel1">
-      <div class="empty-state" id="emptyPending">請先上班打卡 ☕</div>
+      <div class="empty-state">請先上班打卡 ☕</div>
     </div>
-
-    <!-- Tab 2 -->
     <div class="tab-panel" id="panel2">
       <div class="empty-state">暫無待結帳訂單</div>
     </div>
-
-    <!-- Tab 3 -->
     <div class="tab-panel" id="panel3">
       <div class="empty-state">今日尚無結帳記錄</div>
     </div>
-
   </div>
 
 </div><!-- /.app -->
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════
+     ANNOTATION MENU (bottom sheet)
+══════════════════════════════ -->
+<div class="annot-overlay" id="annotOverlay" onclick="closeAnnotMenu()">
+  <div class="annot-menu" onclick="event.stopPropagation()">
+    <div class="annot-title" id="annotTitle">加註</div>
+    <div class="annot-options" id="annotOptions"></div>
+    <div class="annot-row2">
+      <button class="annot-clear" onclick="clearAnnot()">清除加註</button>
+      <button class="annot-cancel" onclick="closeAnnotMenu()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     ADD-ITEM MODAL (bottom sheet)
+══════════════════════════════ -->
+<div class="modal-overlay" id="addItemOverlay" onclick="closeAddItem()">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-title">＋ 加點品項</div>
+    <div class="modal-field">
+      <label class="modal-label">品項名稱</label>
+      <input type="text" id="addItemName" class="modal-input" placeholder="例：美式咖啡(熱)">
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">數量</label>
+        <input type="number" id="addItemQty" class="modal-input" value="1" min="1" max="9">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">單價 (NT$)</label>
+        <input type="number" id="addItemPrice" class="modal-input" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeAddItem()">取消</button>
+      <button class="modal-ok" onclick="confirmAddItem()">確認加點</button>
+    </div>
+  </div>
+</div>
 
 <!-- ════════════════════════════════════════════
      JAVASCRIPT
@@ -782,21 +1021,31 @@
 /* ─────────────────────────────────────────
    CONFIG
 ───────────────────────────────────────── */
-const SCRIPT_URL     = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
-const POLL_MS        = 30000;   // 30 秒
-const SWIPE_THRESH   = 80;      // px
+const SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
+const POLL_MS      = 30000;
+const SWIPE_THRESH = 80;
+const LONG_PRESS_MS = 500;
+
+/* ── Annotation options per item keyword ── */
+const ANNOT_MAP = {
+  '手沖': { title: '☕ 選擇豆子', opts: ['肯亞', '衣索比亞', '哥倫比亞', '瓜地馬拉', '哥斯大黎加', '蘇門答臘'] },
+  '煎餃': { title: '🥟 選擇辣度', opts: ['加辣', '不辣', '分開放'] },
+};
 
 /* ─────────────────────────────────────────
    STATE
 ───────────────────────────────────────── */
-let workStatus   = 'off';          // 'on' | 'off'
-let selectedStaff = '';
-let allOrders    = [];             // from getOrders (incomplete orders)
-let todayLog     = [];             // 已結帳 (local session + optional server fetch)
-let itemDoneMap  = {};             // { orderId: [bool, bool, ...] }
-let pollTimer    = null;
-let currentTab   = 1;
-let toastTimer   = null;
+let workStatus        = 'off';
+let selectedStaff     = '';
+let allOrders         = [];
+let todayLog          = [];
+let itemDoneMap       = {};   // { orderId: [bool, bool, ...] }
+let annotationMap     = {};   // { 'orderId:idx': 'annotation string' }
+let pendingAnnot      = null; // { orderId, idx }
+let addItemTargetId   = null; // orderId for add-item modal
+let pollTimer         = null;
+let currentTab        = 1;
+let toastTimer        = null;
 
 /* ─────────────────────────────────────────
    API HELPERS
@@ -811,7 +1060,7 @@ async function apiPost(payload) {
   const fd = new FormData();
   fd.append('data', JSON.stringify(payload));
   const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd });
-  if (!res.ok) throw new Error(`POST ${payload.action} → HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`POST → HTTP ${res.status}`);
   return res.json();
 }
 
@@ -823,15 +1072,10 @@ window.addEventListener('load', async () => {
   tryFetchTodayLog();
   renderTab(currentTab);
 
-  // tab buttons
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => switchTab(parseInt(btn.dataset.tab)));
   });
-
-  // toggle
   document.getElementById('workToggle').addEventListener('change', handleWorkToggle);
-
-  // refresh button
   document.getElementById('btnRefresh').addEventListener('click', manualRefresh);
 });
 
@@ -854,11 +1098,17 @@ async function loadStaff() {
 async function tryFetchTodayLog() {
   try {
     const data = await apiGet('getTodayOrders');
-    todayLog = Array.isArray(data) ? data : [];
-    updateBadges();
-    if (currentTab === 3) renderTab3();
+    if (!Array.isArray(data) || data.length === 0) return;
+    // Guard: only accept if data looks like completed/paid orders
+    // (prevents overwrite when getTodayOrders falls through to getOrders)
+    const looksLikePaid = data.every(o => o.payStatus === '已結帳');
+    if (looksLikePaid) {
+      todayLog = data;
+      updateBadges();
+      if (currentTab === 3) renderTab3();
+    }
   } catch (_) {
-    /* getTodayOrders 尚未部署時靜默略過，Tab 3 靠本地累積 */
+    /* endpoint not yet deployed — Tab 3 relies on local session accumulation */
   }
 }
 
@@ -870,7 +1120,7 @@ async function handleWorkToggle() {
   const staff  = document.getElementById('staffSelect').value;
 
   if (!staff) {
-    toggle.checked = !toggle.checked; // revert
+    toggle.checked = !toggle.checked;
     showToast('請先選擇員工姓名 👆');
     return;
   }
@@ -879,17 +1129,11 @@ async function handleWorkToggle() {
   showLoading(true);
 
   try {
-    await apiPost({
-      action:    'clockIn',
-      staffName: staff,
-      type,
-      timestamp: new Date().toISOString()
-    });
+    await apiPost({ action: 'clockIn', staffName: staff, type, timestamp: new Date().toISOString() });
 
     selectedStaff = staff;
     workStatus    = toggle.checked ? 'on' : 'off';
 
-    // update UI
     const pill = document.getElementById('statusPill');
     pill.textContent = workStatus === 'on' ? '上班中' : '下班中';
     pill.className   = 'status-pill' + (workStatus === 'on' ? ' on' : '');
@@ -905,12 +1149,9 @@ async function handleWorkToggle() {
       renderTab(currentTab);
     }
 
-    showToast(
-      type === 'in' ? `✓ ${staff} 上班打卡` : `✓ ${staff} 下班打卡`,
-      'ok'
-    );
+    showToast(type === 'in' ? `✓ ${staff} 上班打卡` : `✓ ${staff} 下班打卡`, 'ok');
   } catch (e) {
-    toggle.checked = !toggle.checked; // revert
+    toggle.checked = !toggle.checked;
     showToast('打卡失敗，請重試', 'err');
   } finally {
     showLoading(false);
@@ -932,10 +1173,9 @@ function stopPolling() {
 
 async function fetchOrders() {
   try {
-    const raw = await apiGet('getOrders');
+    const raw    = await apiGet('getOrders');
     const orders = Array.isArray(raw) ? raw : [];
 
-    // init itemDoneMap for brand-new orders
     orders.forEach(o => {
       if (!itemDoneMap[o.orderId]) {
         itemDoneMap[o.orderId] = parseItems(o.items).map(() => false);
@@ -955,7 +1195,8 @@ async function manualRefresh() {
   showLoading(true);
   try {
     if (workStatus === 'on') await fetchOrders();
-    await tryFetchTodayLog();
+    // Note: intentionally NOT calling tryFetchTodayLog here,
+    // to avoid overwriting local todayLog accumulated this session.
     updateLastUpdated();
     renderTab(currentTab);
     showToast('已更新');
@@ -1010,38 +1251,60 @@ function renderTab1() {
 
   panel.innerHTML = orders.map(o => buildPendingCard(o)).join('');
 
-  // Bind swipe to each item row
-  panel.querySelectorAll('.item-swipe-row').forEach(row => {
-    bindItemSwipe(row);
+  panel.querySelectorAll('.item-swipe-row').forEach(row => bindItemSwipe(row));
+  panel.querySelectorAll('.item-swipe-row[data-annotable="1"]').forEach(row => {
+    const content = row.querySelector('.item-swipe-content');
+    const orderId = row.dataset.order;
+    const idx     = parseInt(row.dataset.idx, 10);
+    const item    = parseItems(allOrders.find(o => o.orderId === orderId)?.items || '')[idx] || '';
+    bindLongPress(content, () => openAnnotMenu(orderId, idx, item));
+    content.addEventListener('contextmenu', e => e.preventDefault());
   });
 }
 
 function buildPendingCard(order) {
   const items  = parseItems(order.items);
   const states = itemDoneMap[order.orderId] || items.map(() => false);
+  const timeStr = formatCardTime(order.date, order.time);
 
   const rowsHTML = items.map((item, idx) => {
-    const done = states[idx];
+    const done     = states[idx];
+    const key      = `${order.orderId}:${idx}`;
+    const annot    = annotationMap[key] || '';
+    const annotKey = getAnnotKey(item);
+    const annotable = annotKey ? '1' : '0';
+
+    const annotBadge = annot
+      ? `<span class="item-annot">${esc(annot)}</span>`
+      : (annotKey ? `<span class="item-annot-icon" title="長按加註">✎</span>` : '');
+
     return `
       <div class="item-swipe-row${done ? ' done' : ''}"
-           data-order="${esc(order.orderId)}" data-idx="${idx}">
+           data-order="${esc(order.orderId)}" data-idx="${idx}" data-annotable="${annotable}">
         <div class="item-swipe-bg">✓ 完成</div>
         <div class="item-swipe-content">
           <div class="check-circle">${done ? '✓' : ''}</div>
-          <div class="item-name">${esc(item)}</div>
+          <div class="item-name">${esc(item)}${annotBadge}</div>
         </div>
       </div>`;
   }).join('');
+
+  const guestHTML = order.guestName
+    ? `<span class="card-guest">👤 ${esc(order.guestName)}</span>` : '';
 
   return `
     <div class="pending-card" id="pcard-${esc(order.orderId)}">
       <div class="pending-card-header">
         <span class="order-id-badge">${esc(order.orderId)}</span>
         <span class="card-seat">🪑 ${esc(order.seat)}</span>
-        <span class="card-time">${esc(order.time)}</span>
+        ${guestHTML}
+        <span class="card-time">${timeStr}</span>
       </div>
       <div class="items-list">${rowsHTML}</div>
-      <div class="swipe-hint">← 右滑品項標記完成</div>
+      <div class="card-actions">
+        <span class="swipe-hint">← 右滑品項標記完成</span>
+        <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
+      </div>
     </div>`;
 }
 
@@ -1052,14 +1315,12 @@ function bindItemSwipe(row) {
   const bg      = row.querySelector('.item-swipe-bg');
 
   makeSwipeable(row, content, bg, () => {
-    // ignore if already done
     if (row.classList.contains('done')) return;
     handleItemDone(orderId, idx, row, content);
   });
 }
 
 async function handleItemDone(orderId, idx, row, content) {
-  // local mark immediately
   if (!itemDoneMap[orderId]) return;
   itemDoneMap[orderId][idx] = true;
 
@@ -1071,7 +1332,6 @@ async function handleItemDone(orderId, idx, row, content) {
   const allDone = itemDoneMap[orderId].every(Boolean);
   if (!allDone) return;
 
-  // All items done → mark order complete
   showLoading(true);
   try {
     await apiPost({ action: 'updateStatus', orderId, field: 'status', status: '完成' });
@@ -1082,7 +1342,6 @@ async function handleItemDone(orderId, idx, row, content) {
     renderTab1();
   } catch (e) {
     showToast('狀態更新失敗，請重試', 'err');
-    // revert local state
     itemDoneMap[orderId][idx] = false;
     renderTab1();
   } finally {
@@ -1113,26 +1372,36 @@ function renderTab2() {
 }
 
 function buildReadyCard(order) {
-  const items = parseItems(order.items);
+  const items   = parseItems(order.items);
+  const timeStr = formatCardTime(order.date, order.time);
   const rowsHTML = items.map(i => `<div class="ready-item-line">${esc(i)}</div>`).join('');
 
+  const guestHTML = order.guestName
+    ? `<span class="card-guest">👤 ${esc(order.guestName)}</span>` : '';
+
   return `
-    <div class="card-swipe-outer" data-order="${esc(order.orderId)}">
-      <div class="card-swipe-bg">💳 結帳完成 ✓</div>
-      <div class="card-swipe-inner">
-        <div class="ready-card-header">
-          <span class="order-id-badge">${esc(order.orderId)}</span>
-          <span class="card-seat" style="color:rgba(255,255,255,.92)">🪑 ${esc(order.seat)}</span>
-          <span class="card-time">${esc(order.time)}</span>
-        </div>
-        <div class="ready-items-body">${rowsHTML}</div>
-        <div class="card-footer">
-          <span class="total-label">訂單金額</span>
-          <span class="total-amount">$${esc(order.totalPrice)}</span>
+    <div class="ready-card-block">
+      <div class="card-swipe-outer" data-order="${esc(order.orderId)}">
+        <div class="card-swipe-bg">💳 結帳完成 ✓</div>
+        <div class="card-swipe-inner">
+          <div class="ready-card-header">
+            <span class="order-id-badge">${esc(order.orderId)}</span>
+            <span class="card-seat">🪑 ${esc(order.seat)}</span>
+            ${guestHTML}
+            <span class="card-time">${timeStr}</span>
+          </div>
+          <div class="ready-items-body">${rowsHTML}</div>
+          <div class="card-footer">
+            <span class="total-label">訂單金額</span>
+            <span class="total-amount">$${esc(order.totalPrice)}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="swipe-hint" style="margin-bottom:6px">← 右滑整張卡片完成結帳</div>`;
+      <div class="card-extra-actions">
+        <button class="btn-add-item" onclick="openAddItem('${esc(order.orderId)}')">＋ 加點</button>
+      </div>
+      <div class="swipe-hint" style="text-align:right;padding:4px 4px 0">← 右滑整張卡片完成結帳</div>
+    </div>`;
 }
 
 async function handleOrderPaid(orderId) {
@@ -1143,7 +1412,7 @@ async function handleOrderPaid(orderId) {
     if (i !== -1) {
       const [gone] = allOrders.splice(i, 1);
       gone.payStatus = '已結帳';
-      todayLog.unshift(gone);   // 最新在最上
+      todayLog.unshift(gone);
     }
     showToast(`${orderId} 已結帳 ✓`, 'ok');
     updateBadges();
@@ -1169,13 +1438,17 @@ function renderTab3() {
   const total = todayLog.reduce((s, o) => s + (parseFloat(o.totalPrice) || 0), 0);
 
   const cardsHTML = todayLog.map(o => {
-    const lines = parseItems(o.items).map(i => esc(i)).join('<br>');
+    const lines   = parseItems(o.items).map(i => esc(i)).join('<br>');
+    const timeStr = formatCardTime(o.date, o.time);
+    const guestHTML = o.guestName
+      ? `<span class="card-guest" style="background:var(--tan);color:var(--espresso);">👤 ${esc(o.guestName)}</span>` : '';
     return `
       <div class="log-card">
         <div class="log-card-top">
           <span class="log-badge">${esc(o.orderId)}</span>
           <span class="log-seat">🪑 ${esc(o.seat)}</span>
-          <span class="log-time">${esc(o.time)}</span>
+          ${guestHTML}
+          <span class="log-time">${timeStr}</span>
         </div>
         <div class="log-items-text">${lines}</div>
         <div class="log-total-row">$${esc(o.totalPrice)}</div>
@@ -1194,11 +1467,136 @@ function renderTab3() {
 }
 
 /* ─────────────────────────────────────────
+   ANNOTATION MENU
+───────────────────────────────────────── */
+function getAnnotKey(itemText) {
+  for (const kw of Object.keys(ANNOT_MAP)) {
+    if (itemText.includes(kw)) return kw;
+  }
+  return null;
+}
+
+function openAnnotMenu(orderId, idx, itemText) {
+  const kw = getAnnotKey(itemText);
+  if (!kw) return;
+
+  pendingAnnot = { orderId, idx };
+  const cfg    = ANNOT_MAP[kw];
+  const key    = `${orderId}:${idx}`;
+  const current = annotationMap[key] || '';
+
+  document.getElementById('annotTitle').textContent = cfg.title;
+  document.getElementById('annotOptions').innerHTML = cfg.opts.map(o => `
+    <button class="annot-option${current === o ? ' selected' : ''}"
+            onclick="selectAnnot('${esc(o)}')">${o}</button>`).join('');
+
+  document.getElementById('annotOverlay').classList.add('show');
+}
+
+function selectAnnot(value) {
+  if (!pendingAnnot) return;
+  annotationMap[`${pendingAnnot.orderId}:${pendingAnnot.idx}`] = value;
+  closeAnnotMenu();
+  renderTab1();
+}
+
+function clearAnnot() {
+  if (!pendingAnnot) return;
+  delete annotationMap[`${pendingAnnot.orderId}:${pendingAnnot.idx}`];
+  closeAnnotMenu();
+  renderTab1();
+}
+
+function closeAnnotMenu() {
+  document.getElementById('annotOverlay').classList.remove('show');
+  pendingAnnot = null;
+}
+
+/* ─────────────────────────────────────────
+   ADD-ITEM MODAL
+   ⚠ Requires Apps Script action=addItem:
+     addItem(data) reads data.orderId, data.itemName, data.qty, data.itemPrice
+     → appends to items cell, updates totalPrice
+───────────────────────────────────────── */
+function openAddItem(orderId) {
+  addItemTargetId = orderId;
+  document.getElementById('addItemName').value  = '';
+  document.getElementById('addItemQty').value   = 1;
+  document.getElementById('addItemPrice').value = '';
+  document.getElementById('addItemOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('addItemName').focus(), 300);
+}
+
+function closeAddItem() {
+  document.getElementById('addItemOverlay').classList.remove('show');
+  addItemTargetId = null;
+}
+
+async function confirmAddItem() {
+  const name  = document.getElementById('addItemName').value.trim();
+  const qty   = Math.max(1, parseInt(document.getElementById('addItemQty').value) || 1);
+  const price = parseInt(document.getElementById('addItemPrice').value) || 0;
+
+  if (!name) { showToast('請輸入品項名稱'); return; }
+  if (!addItemTargetId) return;
+
+  const orderId = addItemTargetId;
+  closeAddItem();
+  showLoading(true);
+
+  try {
+    await apiPost({ action: 'addItem', orderId, itemName: name, qty, itemPrice: price });
+
+    // Update local state immediately
+    const order = allOrders.find(o => o.orderId === orderId);
+    if (order) {
+      const newLine = `${name} x${qty} = $${price * qty}`;
+      order.items      = order.items ? `${order.items}\n${newLine}` : newLine;
+      order.totalPrice = (parseFloat(order.totalPrice) || 0) + price * qty;
+      if (itemDoneMap[orderId]) itemDoneMap[orderId].push(false);
+    }
+
+    showToast(`已加點「${name}」✓`, 'ok');
+    renderTab(currentTab);
+  } catch (e) {
+    showToast('加點失敗，請重試', 'err');
+  } finally {
+    showLoading(false);
+  }
+}
+
+/* ─────────────────────────────────────────
+   LONG PRESS
+───────────────────────────────────────── */
+function bindLongPress(el, callback) {
+  let timer = null;
+  let moved = false;
+
+  function start(e) {
+    moved = false;
+    timer = setTimeout(() => {
+      if (!moved) {
+        if (navigator.vibrate) navigator.vibrate(30);
+        callback(e);
+      }
+    }, LONG_PRESS_MS);
+  }
+
+  function cancel() { clearTimeout(timer); timer = null; }
+  function move()   { moved = true; cancel(); }
+
+  el.addEventListener('touchstart',  start,  { passive: true });
+  el.addEventListener('touchend',    cancel);
+  el.addEventListener('touchcancel', cancel);
+  el.addEventListener('touchmove',   move,   { passive: true });
+  el.addEventListener('mousedown',   start);
+  el.addEventListener('mouseup',     cancel);
+  el.addEventListener('mouseleave',  cancel);
+  el.addEventListener('mousemove',   move);
+}
+
+/* ─────────────────────────────────────────
    SWIPE ENGINE
-   wrapper  : overflow:hidden 容器
-   content  : 實際會位移的元素
-   bg       : 底層綠色提示層
-   callback : 觸發後的 async 函式
 ───────────────────────────────────────── */
 function makeSwipeable(wrapper, content, bg, callback) {
   let startX = 0, deltaX = 0, active = false;
@@ -1208,7 +1606,7 @@ function makeSwipeable(wrapper, content, bg, callback) {
   }
 
   function onStart(e) {
-    if (wrapper.classList.contains('done')) return; // item already done
+    if (wrapper.classList.contains('done')) return;
     startX = getX(e);
     deltaX = 0;
     active = true;
@@ -1219,49 +1617,38 @@ function makeSwipeable(wrapper, content, bg, callback) {
   function onMove(e) {
     if (!active) return;
     const dx = getX(e) - startX;
-    deltaX = Math.max(0, dx); // right-only
+    deltaX = Math.max(0, dx);
     if (deltaX === 0) return;
-
     const progress = Math.min(deltaX / SWIPE_THRESH, 1);
     content.style.transform = `translateX(${deltaX}px)`;
     if (bg) bg.style.opacity = progress;
-
-    // prevent vertical scroll during horizontal swipe
-    if (e.cancelable && e.type === 'touchmove' && deltaX > 8) {
-      e.preventDefault();
-    }
+    if (e.cancelable && e.type === 'touchmove' && deltaX > 8) e.preventDefault();
   }
 
   function onEnd() {
     if (!active) return;
     active = false;
-
     const ease = 'cubic-bezier(0.25, 1, 0.5, 1)';
     content.style.transition = `transform 0.3s ${ease}`;
     if (bg) bg.style.transition = `opacity 0.3s ease`;
 
     if (deltaX >= SWIPE_THRESH) {
-      // fly off screen → callback
       content.style.transform = `translateX(${wrapper.offsetWidth + 30}px)`;
       if (bg) bg.style.opacity = '1';
       setTimeout(() => callback(), 280);
     } else {
-      // snap back
       content.style.transform = 'translateX(0)';
       if (bg) bg.style.opacity = '0';
     }
     deltaX = 0;
   }
 
-  // Touch
   wrapper.addEventListener('touchstart', onStart, { passive: true });
   wrapper.addEventListener('touchmove',  onMove,  { passive: false });
   wrapper.addEventListener('touchend',   onEnd);
-
-  // Mouse (desktop)
-  wrapper.addEventListener('mousedown', onStart);
-  wrapper.addEventListener('mousemove', onMove);
-  wrapper.addEventListener('mouseup',   onEnd);
+  wrapper.addEventListener('mousedown',  onStart);
+  wrapper.addEventListener('mousemove',  onMove);
+  wrapper.addEventListener('mouseup',    onEnd);
   wrapper.addEventListener('mouseleave', onEnd);
 }
 
@@ -1281,9 +1668,56 @@ function esc(v) {
     .replace(/"/g, '&quot;');
 }
 
+/**
+ * Format order date+time for display as "MM/DD HH:MM" (GMT+8).
+ * Google Sheets sometimes serializes date/time cells as ISO strings
+ * (e.g. time-only → "1899-12-30T06:19:00.000Z", date → "2026-04-04T16:00:00.000Z").
+ * We add 8 hours to convert UTC → GMT+8.
+ */
+function formatCardTime(dateRaw, timeRaw) {
+  const dStr = String(dateRaw || '');
+  const tStr = String(timeRaw || '');
+
+  let month = '', day = '', hour = '', minute = '';
+
+  /* ── Parse time ── */
+  if (tStr.includes('T')) {
+    // ISO from Sheets (e.g. "1899-12-30T06:19:00.000Z")
+    const t   = new Date(tStr);
+    const gmt8 = new Date(t.getTime() + 8 * 3600 * 1000);
+    hour   = String(gmt8.getUTCHours()).padStart(2, '0');
+    minute = String(gmt8.getUTCMinutes()).padStart(2, '0');
+  } else {
+    // Plain "HH:mm"
+    const parts = tStr.split(':');
+    hour   = (parts[0] || '00').padStart(2, '0');
+    minute = (parts[1] || '00').padStart(2, '0');
+  }
+
+  /* ── Parse date ── */
+  if (dStr.includes('T')) {
+    // ISO from Sheets (e.g. "2026-04-04T16:00:00.000Z" = Apr 5 in GMT+8)
+    const d    = new Date(dStr);
+    const gmt8 = new Date(d.getTime() + 8 * 3600 * 1000);
+    month = String(gmt8.getUTCMonth() + 1).padStart(2, '0');
+    day   = String(gmt8.getUTCDate()).padStart(2, '0');
+  } else if (dStr.includes('/') || dStr.includes('-')) {
+    // "yyyy/MM/dd" or "yyyy-MM-dd"
+    const parts = dStr.replace(/-/g, '/').split('/');
+    if (parts.length === 3) {
+      month = parts[1].padStart(2, '0');
+      day   = parts[2].padStart(2, '0');
+    }
+  }
+
+  const datePart = (month && day) ? `${month}/${day} ` : '';
+  return `${datePart}${hour}:${minute}`;
+}
+
 function updateLastUpdated() {
-  const d = new Date();
-  const hms = [d.getHours(), d.getMinutes(), d.getSeconds()]
+  const now  = new Date();
+  const gmt8 = new Date(now.getTime() + 8 * 3600 * 1000);
+  const hms  = [gmt8.getUTCHours(), gmt8.getUTCMinutes(), gmt8.getUTCSeconds()]
     .map(n => String(n).padStart(2, '0')).join(':');
   document.getElementById('lastUpdate').textContent = `更新 ${hms}`;
 }
