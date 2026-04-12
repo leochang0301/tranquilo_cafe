@@ -373,8 +373,8 @@ const STORES = {
 };
 
 // 讀 URL 參數 ?store=xxx，預設川夏
-const storeKey = new URLSearchParams(location.search).get('store') || 'chuanxia';
-const STORE    = STORES[storeKey] || STORES.chuanxia;
+const storeKey = new URLSearchParams(location.search).get('store') || 'tranquilo';
+const STORE    = STORES[storeKey] || STORES.tranquilo;
 const SCRIPT_URL = STORE.scriptUrl;
 const CACHE_KEY  = STORE.cacheKey;
 
