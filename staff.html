@@ -630,6 +630,7 @@ const PTR_THRESH    = 62;
 const ANNOT_MAP = {
   '手沖': { title:'☕ 選擇豆子', opts:['肯亞','衣索比亞','哥倫比亞','瓜地馬拉','哥斯大黎加','蘇門答臘'] },
   '煎餃': { title:'🥟 選擇辣度', opts:['加辣','不辣','分開放'] },
+  '野草茶': { title:'🌿 輸入茶葉', opts:null },  // ← opts:null 代表自由輸入
 };
 
 /* ── STATE ── */
@@ -1183,14 +1184,38 @@ function getAnnotKey(itemText) {
 }
 
 function openAnnotMenu(orderId, idx, itemText) {
+function openAnnotMenu(orderId, idx, itemText) {
   const kw = getAnnotKey(itemText); if (!kw) return;
   pendingAnnot = { orderId, idx };
   const cfg     = ANNOT_MAP[kw];
   const current = annotationMap[`${orderId}:${idx}`] || '';
   document.getElementById('annotTitle').textContent = cfg.title;
-  document.getElementById('annotOptions').innerHTML = cfg.opts.map(o =>
-    `<button class="annot-option${current===o?' selected':''}" onclick="selectAnnot('${esc(o)}')">${o}</button>`
-  ).join('');
+
+  if (cfg.opts === null) {
+    // 自由輸入模式
+    document.getElementById('annotOptions').innerHTML = `
+      <input type="text" id="annotFreeInput" style="
+        grid-column: 1/-1;
+        width:100%; padding:11px 14px;
+        border:1.5px solid var(--tan); border-radius:10px;
+        font-size:1rem; font-family:'Noto Serif TC',serif;
+        color:var(--espresso); outline:none;
+      " placeholder="輸入茶葉名稱" value="${esc(current)}">`;
+    setTimeout(() => document.getElementById('annotFreeInput')?.focus(), 300);
+    // 替換確認按鈕行為
+    document.querySelector('.btn-sheet-ok').onclick = () => {
+      const val = document.getElementById('annotFreeInput')?.value.trim();
+      if (val) selectAnnot(val);
+      else closeAnnotMenu();
+    };
+  } else {
+    // 選項模式（原本邏輯）
+    document.getElementById('annotOptions').innerHTML = cfg.opts.map(o =>
+      `<button class="annot-option${current===o?' selected':''}" onclick="selectAnnot('${esc(o)}')">${o}</button>`
+    ).join('');
+    document.querySelector('.btn-sheet-ok').onclick = closeAnnotMenu;
+  }
+
   document.getElementById('annotOverlay').classList.add('show');
 }
 
