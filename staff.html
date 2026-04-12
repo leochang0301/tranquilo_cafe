@@ -1117,7 +1117,8 @@ async function confirmSplitPay() {
     updateBadges(); renderTab2();
   } catch (e) {
     console.error('splitPay error', e);
-    showToast('分開結帳失敗，請重試', 'err');
+    //showToast('分開結帳失敗，請重試', 'err');
+    showToast(e.message || String(e), 'err');
   } finally { showLoading(false); }
 }
 
