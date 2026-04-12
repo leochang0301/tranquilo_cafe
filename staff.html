@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>川夏後台 ☕</title>
+  <title>員工後台 ☕</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -439,7 +439,7 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="header-title">☕ 員工後台</div>
+    <div class="header-title" id="headerTitle">☕ 員工後台</div>
     <select class="staff-select" id="staffSelect">
       <option value="">── 選擇員工 ──</option>
     </select>
@@ -604,7 +604,24 @@
   ═══════════════════════════════════════════════════════════
 */
 
-const SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
+// ══════════════════════════════════════════
+// 店家設定 — ?store=tranquilo / ?store=underden
+// ══════════════════════════════════════════
+const STORES = {
+  tranquilo: {
+    name:      '川夏',
+    scriptUrl: 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec',
+  },
+  underden: {
+    name:      '渡深',
+    scriptUrl: 'https://script.google.com/macros/s/AKfycbypWJMIdQYy6HYkgW7uVPB1X0PwzsQN9UpAnzGSprAHuf5DchTx3ykJJFhRFQoPEuaj/exec',
+  }
+};
+
+const storeKey = new URLSearchParams(location.search).get('store') || 'tranquilo';
+const STORE    = STORES[storeKey] || STORES.tranquilo;
+const SCRIPT_URL = STORE.scriptUrl;
+
 const POLL_MS       = 30000;
 const SWIPE_THRESH  = 80;
 const LONG_PRESS_MS = 500;
@@ -644,6 +661,8 @@ async function apiPost(payload) {
 
 /* ── INIT ── */
 window.addEventListener('load', () => {
+  document.title = STORE.name + ' 員工後台';
+  document.getElementById('headerTitle').textContent = '☕ ' + STORE.name + ' 後台';
   loadStaff();
   fetchOrders();
   startPolling();
@@ -855,26 +874,24 @@ function bindItemSwipeBidi(row) {
     if (e.cancelable && e.type === 'touchmove' && Math.abs(deltaX) > 8) e.preventDefault();
   };
 
-const onEnd = () => {
+  const onEnd = () => {
     if (!active) return; active = false;
     content.style.transition = 'transform 0.3s cubic-bezier(0.25,1,0.5,1)';
     if (Math.abs(deltaX) >= SWIPE_THRESH) {
-      const dir        = deltaX > 0 ? 1 : -1;
-      const swipeRight = deltaX > 0;
+      const dir = deltaX > 0 ? 1 : -1;
       content.style.transform = `translateX(${dir * (row.offsetWidth + 30)}px)`;
-      bgR && (bgR.style.opacity = swipeRight ? '1' : '0');
-      bgL && (bgL.style.opacity = swipeRight ? '0' : '1');
-      deltaX = 0;
+      bgR && (bgR.style.opacity = deltaX > 0 ? '1' : '0');
+      bgL && (bgL.style.opacity = deltaX < 0 ? '1' : '0');
       setTimeout(() => {
-        if (swipeRight) handleItemDone(orderId, idx, row);
+        if (deltaX > 0) handleItemDone(orderId, idx, row);
         else            handleItemUndo(orderId, idx, row);
       }, 280);
     } else {
       content.style.transform = 'translateX(0)';
       bgR && (bgR.style.opacity = '0');
       bgL && (bgL.style.opacity = '0');
-      deltaX = 0;
     }
+    deltaX = 0;
   };
 
   row.addEventListener('touchstart', onStart, { passive:true });
@@ -891,16 +908,7 @@ async function handleItemDone(orderId, idx, row) {
   itemDoneMap[orderId][idx] = true;
   row.classList.add('done');
   const content = row.querySelector('.item-swipe-content');
-  if (content) {
-    content.style.transform = 'translateX(0)';
-    content.style.background = '#f5f5f5';   // ← 補這行
-  }
-  const itemName = row.querySelector('.item-name');
-  if (itemName) {                            // ← 補這段
-    itemName.style.textDecoration = 'line-through';
-    itemName.style.color = '#aaa';
-    itemName.style.opacity = '0.7';
-  }
+  if (content) content.style.transform = 'translateX(0)';
 
   if (!itemDoneMap[orderId].every(Boolean)) return;
 
@@ -922,16 +930,7 @@ function handleItemUndo(orderId, idx, row) {
   itemDoneMap[orderId][idx] = false;
   row.classList.remove('done');
   const content = row.querySelector('.item-swipe-content');
-  if (content) {
-    content.style.transform = 'translateX(0)';
-    content.style.background = '';        // ← 清掉
-  }
-  const itemName = row.querySelector('.item-name');
-  if (itemName) {
-    itemName.style.textDecoration = '';   // ← 清掉
-    itemName.style.color = '';            // ← 清掉
-    itemName.style.opacity = '';          // ← 清掉
-  }
+  if (content) content.style.transform = 'translateX(0)';
   // Local undo only — if the whole order was already pushed to '完成',
   // you'd need to call updateStatus back. Add that here if needed.
 }
@@ -1074,39 +1073,51 @@ async function confirmSplitPay() {
 
   const items   = parseItems(order.items);
   const paidSet = splitPaidMap[orderId] || new Set();
+  const staff   = document.getElementById('staffSelect').value || '';
 
   const newIndices = [];
   let paidAmount   = 0;
   splitChecked.forEach((checked, idx) => {
-    if (checked && !paidSet.has(idx)) {
-      newIndices.push(idx);
-      paidAmount += extractItemPrice(items[idx]);
-    }
+    if (checked && !paidSet.has(idx)) { newIndices.push(idx); paidAmount += extractItemPrice(items[idx]); }
   });
 
   if (newIndices.length === 0) { showToast('請先勾選要結帳的品項'); return; }
 
-  // 純前端更新，不呼叫後端
-  if (!splitPaidMap[orderId]) splitPaidMap[orderId] = new Set();
-  newIndices.forEach(idx => splitPaidMap[orderId].add(idx));
-
   closeSplitPay();
+  showLoading(true);
 
-  // 計算是否全部結清
-  let totalPaid = 0;
-  items.forEach((item, idx) => {
-    if (splitPaidMap[orderId].has(idx)) totalPaid += extractItemPrice(item);
-  });
+  try {
+    const result = await apiPost({
+      action:      'splitPay',
+      orderId,
+      paidIndices: newIndices,
+      paidAmount,
+      staffName:   staff,
+    });
 
-  showToast(`本次收款 $${paidAmount} ✓`, 'ok');
+    if (result && result.ok === false) throw new Error(result.error || 'server error');
 
-  if (totalPaid >= (parseFloat(order.totalPrice) || 0)) {
-    // 全部結清才呼叫後端
-    await handleOrderPaid(orderId);
-  } else {
-    updateBadges();
-    renderTab2();
-  }
+    if (!splitPaidMap[orderId]) splitPaidMap[orderId] = new Set();
+    newIndices.forEach(idx => splitPaidMap[orderId].add(idx));
+
+    // Check if all items paid
+    let totalPaid = 0;
+    items.forEach((item, idx) => { if (splitPaidMap[orderId].has(idx)) totalPaid += extractItemPrice(item); });
+
+    showToast(`已結帳 $${paidAmount} ✓`, 'ok');
+
+    if (totalPaid >= (parseFloat(order.totalPrice) || 0)) {
+      const i = allOrders.findIndex(o => o.orderId === orderId);
+      if (i !== -1) allOrders.splice(i, 1);
+      delete splitPaidMap[orderId];
+      showToast(`${orderId} 全部結清 ✓`, 'ok');
+    }
+
+    updateBadges(); renderTab2();
+  } catch (e) {
+    console.error('splitPay error', e);
+    showToast('分開結帳失敗，請重試', 'err');
+  } finally { showLoading(false); }
 }
 
 function closeSplitPay() {
