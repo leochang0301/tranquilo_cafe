@@ -35,7 +35,6 @@
       radial-gradient(ellipse at 80% 80%, rgba(138,158,122,0.06) 0%, transparent 60%);
   }
 
-  /* ── Header ── */
   header {
     background: var(--espresso);
     padding: 28px 20px 22px;
@@ -53,12 +52,10 @@
   header h1 { font-family: 'Lora', serif; font-size: 26px; font-weight: 600; color: var(--warm-white); letter-spacing: 1px; }
   header p  { color: var(--tan); font-size: 12px; margin-top: 6px; letter-spacing: 1px; opacity: 0.75; }
 
-  /* ── Divider ── */
   .divider { display: flex; align-items: center; gap: 10px; padding: 0 20px; margin: 22px 0 16px; }
   .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--tan); }
   .divider span { font-family: 'Lora', serif; font-style: italic; font-size: 12px; color: var(--caramel); white-space: nowrap; letter-spacing: 1px; }
 
-  /* ── Category header ── */
   .category-header {
     display: flex; align-items: center; gap: 8px;
     padding: 0 4px; margin: 20px 0 8px;
@@ -67,10 +64,8 @@
   }
   .category-header::after { content: ''; flex: 1; height: 1px; background: var(--tan); }
 
-  /* ── Menu section ── */
   .menu-section { padding: 0 16px; }
 
-  /* ── Menu Item (shared) ── */
   .menu-item {
     background: white; border-radius: 14px; margin-bottom: 10px;
     display: flex; align-items: center; gap: 12px;
@@ -86,14 +81,12 @@
   .menu-item.has-qty::before { background: var(--caramel); }
   .menu-item.has-qty { box-shadow: 0 4px 16px var(--shadow-deep); }
 
-  /* ── Single-temp layout ── */
   .menu-item.single-temp { padding: 14px 16px; align-items: center; }
   .menu-item.single-temp .item-info { flex: 1; min-width: 0; }
   .item-emoji { font-size: 28px; flex-shrink: 0; width: 38px; text-align: center; }
   .item-name  { font-size: 14px; font-weight: 600; color: var(--dark-brown); margin-bottom: 3px; }
   .item-price { font-family: 'Lora', serif; font-size: 13px; color: var(--caramel); font-style: italic; }
 
-  /* ── Dual-temp layout ── */
   .menu-item.dual-temp { padding: 12px 14px 10px; align-items: flex-start; }
   .menu-item.dual-temp .item-emoji { margin-top: 3px; }
   .menu-item.dual-temp .item-info  { flex: 1; min-width: 0; }
@@ -106,7 +99,6 @@
   }
   .temp-price { font-family: 'Lora', serif; font-size: 13px; color: var(--caramel); font-style: italic; flex: 1; }
 
-  /* ── Temperature badge ── */
   .temp-badge {
     display: inline-block; font-size: 10px; font-weight: 700;
     padding: 2px 7px; border-radius: 8px; flex-shrink: 0;
@@ -115,7 +107,6 @@
   .temp-badge.hot  { background: rgba(192,57,43,0.1);  color: var(--hot); }
   .temp-badge.cold { background: rgba(41,128,185,0.12); color: var(--cold); }
 
-  /* ── Qty Control ── */
   .qty-control { display: flex; align-items: center; flex-shrink: 0; }
   .qty-btn {
     width: 32px; height: 32px; border-radius: 50%;
@@ -129,7 +120,6 @@
   .qty-btn.plus:active { background: var(--dark-caramel); border-color: var(--dark-caramel); }
   .qty-display { width: 32px; text-align: center; font-size: 15px; font-weight: 700; color: var(--espresso); font-family: 'Lora', serif; }
 
-  /* ── Loading / Error / Refresh ── */
   .menu-loading {
     text-align: center; padding: 40px 20px;
     color: var(--caramel); font-family: 'Lora', serif; font-style: italic; font-size: 14px;
@@ -152,7 +142,6 @@
   }
   .menu-refresh button:active { color: var(--caramel); border-color: var(--caramel); }
 
-  /* ── Summary ── */
   .summary-section {
     margin: 20px 16px 0; background: white; border-radius: 16px; overflow: hidden;
     box-shadow: 0 3px 14px var(--shadow); border: 1px solid rgba(232,213,183,0.6);
@@ -162,33 +151,20 @@
   .summary-body { padding: 14px 18px; }
   .summary-empty { color: var(--tan); font-size: 13px; text-align: center; padding: 8px 0; font-style: italic; font-family: 'Lora', serif; }
 
-  /* ── Order Cards ── */
   .order-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
     gap: 10px;
   }
   .order-card {
-    background: var(--cream);
-    border: 1.5px solid var(--tan);
-    border-radius: 14px;
-    padding: 14px 8px 12px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
+    background: var(--cream); border: 1.5px solid var(--tan); border-radius: 14px;
+    padding: 14px 8px 12px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 7px;
   }
   .order-card-emoji { font-size: 34px; line-height: 1; }
   .order-card-name  { font-size: 12px; font-weight: 600; color: var(--dark-brown); line-height: 1.35; word-break: break-all; }
-  .order-card-qty   {
-    background: var(--caramel); color: white;
-    font-size: 11px; font-weight: 700;
-    padding: 2px 9px; border-radius: 10px;
-    font-family: 'Lora', serif;
-  }
+  .order-card-qty   { background: var(--caramel); color: white; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; font-family: 'Lora', serif; }
 
-  /* ── Seat & Guest ── */
   .seat-section { margin: 14px 16px 0; }
   .seat-label { font-size: 13px; color: var(--espresso); margin-bottom: 7px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.3px; }
   .seat-label .required { color: var(--rust); font-size: 14px; }
@@ -204,13 +180,9 @@
   select.seat-input {
     appearance: none; -webkit-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8965a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    padding-right: 40px;
-    cursor: pointer;
+    background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer;
   }
 
-  /* ── Submit ── */
   .submit-wrap {
     position: fixed; bottom: 0; left: 0; right: 0;
     padding: 14px 16px 28px;
@@ -228,33 +200,34 @@
   .submit-btn:active:not(:disabled) { transform: scale(0.98); box-shadow: 0 2px 10px rgba(61,35,20,0.3); }
   .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  /* ── Confirm Overlay ── */
   .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(42,26,14,0.55); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 30px; }
   .confirm-overlay.show { display: flex; animation: fadeIn 0.25s ease; }
   .confirm-card { background: white; border-radius: 24px; padding: 32px 24px 28px; text-align: center; width: 100%; max-width: 320px; box-shadow: 0 20px 60px rgba(61,35,20,0.4); animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1); border: 1px solid var(--tan); }
   .confirm-icon  { font-size: 44px; margin-bottom: 14px; display: block; }
   .confirm-title { font-family: 'Lora', serif; font-size: 18px; font-weight: 600; color: var(--dark-brown); margin-bottom: 10px; }
   .confirm-msg   { font-size: 14px; color: var(--espresso); line-height: 1.6; }
-  .confirm-extra {
-    margin-top: 12px; padding: 10px 14px;
-    background: rgba(200,150,90,0.1); border: 1px dashed var(--caramel);
-    border-radius: 10px; font-size: 13px; color: var(--dark-caramel);
-    font-family: 'Lora', serif; font-style: italic; line-height: 1.5;
-  }
+  .confirm-extra { margin-top: 12px; padding: 10px 14px; background: rgba(200,150,90,0.1); border: 1px dashed var(--caramel); border-radius: 10px; font-size: 13px; color: var(--dark-caramel); font-family: 'Lora', serif; font-style: italic; line-height: 1.5; }
   .confirm-actions { display: flex; gap: 10px; margin-top: 20px; }
   .confirm-cancel { flex: 1; padding: 13px; background: white; color: var(--espresso); border: 1.5px solid var(--tan); border-radius: 12px; font-size: 15px; font-family: 'Noto Serif TC', serif; cursor: pointer; transition: background 0.15s; }
   .confirm-cancel:active { background: var(--cream); }
   .confirm-ok { flex: 1; padding: 13px; background: var(--espresso); color: var(--warm-white); border: none; border-radius: 12px; font-size: 15px; font-family: 'Noto Serif TC', serif; font-weight: 600; cursor: pointer; transition: background 0.15s; }
   .confirm-ok:active { background: var(--dark-brown); }
 
-  /* ── Success Overlay ── */
   .success-overlay { display: none; position: fixed; inset: 0; background: rgba(42,26,14,0.55); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 30px; }
   .success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .success-card { background: white; border-radius: 24px; padding: 36px 28px 28px; text-align: center; width: 100%; max-width: 340px; box-shadow: 0 20px 60px rgba(61,35,20,0.4); animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1); border: 1px solid var(--tan); }
-  .success-back { margin-top: 18px; width: 100%; padding: 12px; background: white; color: var(--espresso); border: 1.5px solid var(--tan); border-radius: 12px; font-size: 14px; font-family: 'Noto Serif TC', serif; cursor: pointer; transition: background 0.15s; }
-  .success-back:active { background: var(--cream); }
+  @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .success-card {
+    background: white; border-radius: 24px; padding: 36px 24px 28px;
+    text-align: center; width: 100%; max-width: 340px;
+    box-shadow: 0 20px 60px rgba(61,35,20,0.4);
+    animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    border: 1px solid var(--tan);
+    max-height: 90dvh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  .success-back { margin-top: 14px; width: 100%; padding: 12px; background: white; color: var(--espresso); border: 1.5px solid var(--tan); border-radius: 12px; font-size: 14px; font-family: 'Noto Serif TC', serif; cursor: pointer; transition: background 0.15s; }
+  .success-back:active { background: var(--cream); }
   .success-icon  { font-size: 52px; margin-bottom: 16px; display: block; }
   .success-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: var(--dark-brown); margin-bottom: 10px; }
   .success-msg   { font-size: 13px; color: #888; margin-bottom: 16px; line-height: 1.6; }
@@ -262,14 +235,24 @@
   .order-number .label  { font-size: 11px; color: var(--caramel); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; font-family: 'Lora', serif; font-style: italic; }
   .order-number .number { font-family: 'Lora', serif; font-size: 24px; font-weight: 600; color: var(--espresso); letter-spacing: 2px; }
 
-  /* ── Loading dots ── */
+  .ig-btn {
+    display: block; margin-top: 10px; padding: 12px;
+    background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+    color: white; border-radius: 12px; font-size: 14px;
+    font-family: 'Noto Serif TC', serif; font-weight: 600;
+    text-decoration: none; letter-spacing: 1px;
+  }
+  .ig-hint {
+    margin-top: 10px; font-size: 11px; color: var(--caramel);
+    font-family: 'Lora', serif; font-style: italic; letter-spacing: 0.3px;
+  }
+
   .loading-dots { display: inline-flex; gap: 4px; align-items: center; }
   .loading-dots span { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: dot 1.2s ease-in-out infinite; }
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes dot { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
 
-  /* ── Toast ── */
   .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-80px); background: var(--rust); color: white; padding: 12px 22px; border-radius: 30px; font-size: 13px; z-index: 300; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; box-shadow: 0 6px 20px rgba(184,92,56,0.4); letter-spacing: 0.3px; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
@@ -277,8 +260,8 @@
 <body>
 
 <header>
-  <div class="header-ornament">☕ Welcome</div>
-  <h1>線上點餐</h1>
+  <div class="header-ornament" id="headerOrnament">☕ Welcome</div>
+  <h1 id="headerTitle">線上點餐</h1>
   <p>選好後送出，我們馬上為您準備</p>
 </header>
 
@@ -313,7 +296,6 @@
   </div>
 </div>
 
-<!-- 更新菜單（Staff 用） -->
 <div class="menu-refresh" id="refreshWrap">
   <button onclick="refreshMenu()">⟳ 更新菜單</button>
 </div>
@@ -348,6 +330,21 @@
       <div class="label">訂單編號</div>
       <div class="number" id="orderNumber">—</div>
     </div>
+
+    <!-- 品項卡片（截圖用） -->
+    <div id="successCards" style="
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
+      gap:8px;
+    "></div>
+
+    <!-- IG 分享區（由 STORE config 控制顯示） -->
+    <div id="igShareBlock" style="display:none;">
+      <div class="ig-hint">📸 截圖後傳送至 IG 預約</div>
+      <a id="igBtn" href="#" target="_blank" class="ig-btn">📩 開啟 Instagram 傳送</a>
+    </div>
+
     <button class="success-back" onclick="closeSuccess()">← 返回查看餐點</button>
   </div>
 </div>
@@ -355,364 +352,358 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec';
-  const CACHE_KEY  = 'tranquilo_menu_v2';
+// ══════════════════════════════════════════
+// 店家設定 — 新增店家只需在這裡加一筆
+// ══════════════════════════════════════════
+const STORES = {
+  tranquilo: {
+    name:        '川夏',
+    scriptUrl:   'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec',
+    igHandle:    null,
+    showIGShare: false,
+    cacheKey:    'menu_tranquilo_v2',
+  },
+  underden: {
+    name:        '渡深',
+    scriptUrl:   'https://script.google.com/macros/s/AKfycbypWJMIdQYy6HYkgW7uVPB1X0PwzsQN9UpAnzGSprAHuf5DchTx3ykJJFhRFQoPEuaj/exec',
+    igHandle:    'tranquilo_underden',
+    showIGShare: true,
+    cacheKey:    'menu_underden_v2',
+  }
+};
 
-  let MENU      = [];   // 展開後的品項（每個溫度獨立一筆）
-  const qty     = {};   // MENU index → 數量
-  let submitted = false;
+// 讀 URL 參數 ?store=xxx，預設川夏
+const storeKey = new URLSearchParams(location.search).get('store') || 'chuanxia';
+const STORE    = STORES[storeKey] || STORES.chuanxia;
+const SCRIPT_URL = STORE.scriptUrl;
+const CACHE_KEY  = STORE.cacheKey;
 
-  // ══════════════════════════════════════════
-  // 菜單載入（僅讀取快取，不自動 fetch）
-  // ══════════════════════════════════════════
+// 套用店家設定到頁面
+document.title = STORE.name + ' 點餐';
+document.getElementById('headerTitle').textContent = STORE.name + ' 線上點餐';
+if (STORE.showIGShare && STORE.igHandle) {
+  document.getElementById('igShareBlock').style.display = 'block';
+  document.getElementById('igBtn').href = 'https://www.instagram.com/' + STORE.igHandle + '/';
+}
 
-  function loadMenu() {
-    const cached = getCache();
-    if (cached) {
-      initMenu(cached);        // 有快取 → 直接顯示，不打 API
+// ══════════════════════════════════════════
+// 菜單載入
+// ══════════════════════════════════════════
+let MENU      = [];
+const qty     = {};
+let submitted = false;
+
+function loadMenu() {
+  const cached = getCache();
+  if (cached) {
+    initMenu(cached);
+  } else {
+    fetchAndCache();
+  }
+}
+
+async function fetchAndCache() {
+  showMenuLoading();
+  try {
+    const res   = await fetch(SCRIPT_URL + '?action=getMenu');
+    const items = await res.json();
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ items, savedAt: new Date().toISOString() }));
+    initMenu(items);
+    showToast('菜單已更新 ✓');
+  } catch (err) {
+    const fallback = getCache();
+    if (fallback) {
+      initMenu(fallback);
+      showToast('更新失敗，使用快取菜單');
     } else {
-      fetchAndCache();         // 無快取（新裝置/首次）→ 自動 fetch
+      document.getElementById('menuSection').innerHTML = `
+        <div class="menu-error">
+          菜單載入失敗，請確認網路連線<br>
+          <button onclick="refreshMenu()">重新載入</button>
+        </div>`;
     }
   }
+}
 
-  async function fetchAndCache() {
-    showMenuLoading();
-    try {
-      const res   = await fetch(SCRIPT_URL + '?action=getMenu');
-      const items = await res.json();
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ items, savedAt: new Date().toISOString() }));
-      initMenu(items);
-      showToast('菜單已更新 ✓');
-    } catch (err) {
-      const fallback = getCache();
-      if (fallback) {
-        initMenu(fallback);
-        showToast('更新失敗，使用快取菜單');
+async function refreshMenu() {
+  await fetchAndCache();
+}
+
+function getCache() {
+  try {
+    const d = JSON.parse(localStorage.getItem(CACHE_KEY));
+    return d && d.items ? d.items : null;
+  } catch { return null; }
+}
+
+function showMenuLoading() {
+  document.getElementById('menuSection').innerHTML = `
+    <div class="menu-loading">
+      <div class="loading-dots" style="color:var(--caramel)"><span></span><span></span><span></span></div>
+      <div style="margin-top:10px;">菜單載入中…</div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// 座位載入
+// ══════════════════════════════════════════
+async function loadSeats() {
+  const select = document.getElementById('seatInput');
+  try {
+    const res   = await fetch(SCRIPT_URL + '?action=getSeats');
+    const seats = await res.json();
+    select.innerHTML = '<option value="">請選擇座位</option>';
+    seats.forEach(seat => {
+      const opt = document.createElement('option');
+      if (typeof seat === 'string') {
+        opt.value = seat; opt.textContent = seat;
       } else {
-        document.getElementById('menuSection').innerHTML = `
-          <div class="menu-error">
-            菜單載入失敗，請確認網路連線<br>
-            <button onclick="refreshMenu()">重新載入</button>
-          </div>`;
+        opt.value = seat.value ?? seat.seat ?? '';
+        opt.textContent = seat.label ?? seat.seat ?? seat.value ?? '';
       }
+      select.appendChild(opt);
+    });
+  } catch {
+    select.innerHTML = '<option value="">座位載入失敗，請重新整理頁面</option>';
+  }
+}
+
+// ══════════════════════════════════════════
+// 初始化 & 展開品項
+// ══════════════════════════════════════════
+function initMenu(rawItems) {
+  MENU = expandItems(rawItems.filter(it => it.enabled));
+  MENU.forEach((_, i) => qty[i] = 0);
+  renderMenu();
+  renderSummary();
+}
+
+function expandItems(items) {
+  const result = [];
+  items.forEach(it => {
+    const hasBoth = it.hotPrice && it.coldPrice;
+    if (it.hotPrice) {
+      result.push({ displayName: hasBoth ? it.name+'(熱)' : it.name, baseName: it.name, price: it.hotPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '熱' : null });
     }
-  }
-
-  // Staff 手動更新菜單
-  async function refreshMenu() {
-    await fetchAndCache();
-  }
-
-  function getCache() {
-    try {
-      const d = JSON.parse(localStorage.getItem(CACHE_KEY));
-      return d && d.items ? d.items : null;
-    } catch { return null; }
-  }
-
-  function showMenuLoading() {
-    document.getElementById('menuSection').innerHTML = `
-      <div class="menu-loading">
-        <div class="loading-dots" style="color:var(--caramel)"><span></span><span></span><span></span></div>
-        <div style="margin-top:10px;">菜單載入中…</div>
-      </div>`;
-  }
-
-  // ══════════════════════════════════════════
-  // 座位載入（動態 fetch SEAT tab）
-  // ══════════════════════════════════════════
-
-  async function loadSeats() {
-    const select = document.getElementById('seatInput');
-    try {
-      const res   = await fetch(SCRIPT_URL + '?action=getSeats');
-      const seats = await res.json(); // 預期格式：string[] 或 [{value, label}]
-      select.innerHTML = '<option value="">請選擇座位</option>';
-      seats.forEach(seat => {
-        const opt = document.createElement('option');
-        if (typeof seat === 'string') {
-          opt.value = seat;
-          opt.textContent = seat;
-        } else {
-          opt.value = seat.value ?? seat.seat ?? '';
-          opt.textContent = seat.label ?? seat.seat ?? seat.value ?? '';
-        }
-        select.appendChild(opt);
-      });
-    } catch (err) {
-      select.innerHTML = '<option value="">座位載入失敗，請重新整理頁面</option>';
+    if (it.coldPrice) {
+      result.push({ displayName: hasBoth ? it.name+'(冰)' : it.name, baseName: it.name, price: it.coldPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '冰' : null });
     }
-  }
+    if (!it.hotPrice && !it.coldPrice) {
+      result.push({ displayName: it.name, baseName: it.name, price: null, emoji: it.emoji, category: it.category, temp: null });
+    }
+  });
+  return result;
+}
 
-  // ══════════════════════════════════════════
-  // 初始化 & 展開品項
-  // ══════════════════════════════════════════
+// ══════════════════════════════════════════
+// 渲染菜單
+// ══════════════════════════════════════════
+function renderMenu() {
+  const section = document.getElementById('menuSection');
+  section.innerHTML = '';
+  const categories = [...new Set(MENU.map(it => it.category))];
 
-  function initMenu(rawItems) {
-    MENU = expandItems(rawItems.filter(it => it.enabled));
-    MENU.forEach((_, i) => qty[i] = 0);
-    renderMenu();
-    renderSummary();
-  }
+  categories.forEach(cat => {
+    const header = document.createElement('div');
+    header.className = 'category-header';
+    header.textContent = cat;
+    section.appendChild(header);
 
-  // 展開：熱/冰成獨立條目，保留 baseName 供分組渲染
-  function expandItems(items) {
-    const result = [];
-    items.forEach(it => {
-      const hasBoth = it.hotPrice && it.coldPrice;
-      if (it.hotPrice) {
-        result.push({
-          displayName: hasBoth ? it.name + '(熱)' : it.name,
-          baseName: it.name, price: it.hotPrice,
-          emoji: it.emoji, category: it.category,
-          temp: hasBoth ? '熱' : null
-        });
-      }
-      if (it.coldPrice) {
-        result.push({
-          displayName: hasBoth ? it.name + '(冰)' : it.name,
-          baseName: it.name, price: it.coldPrice,
-          emoji: it.emoji, category: it.category,
-          temp: hasBoth ? '冰' : null
-        });
-      }
-      if (!it.hotPrice && !it.coldPrice) {
-        result.push({
-          displayName: it.name, baseName: it.name,
-          price: null, emoji: it.emoji,
-          category: it.category, temp: null
-        });
+    const groups = [];
+    MENU.filter(it => it.category === cat).forEach(it => {
+      const idx  = MENU.indexOf(it);
+      const last = groups[groups.length - 1];
+      if (last && last.baseName === it.baseName) {
+        last.entries.push({ it, idx });
+      } else {
+        groups.push({ baseName: it.baseName, emoji: it.emoji, entries: [{ it, idx }] });
       }
     });
-    return result;
-  }
 
-  // ══════════════════════════════════════════
-  // 渲染菜單（合併熱/冰成同一卡片）
-  // ══════════════════════════════════════════
+    groups.forEach(group => {
+      const isDual   = group.entries.length > 1;
+      const firstIdx = group.entries[0].idx;
+      const hasQty   = group.entries.some(({ idx }) => (qty[idx] || 0) > 0);
 
-  function renderMenu() {
-    const section = document.getElementById('menuSection');
-    section.innerHTML = '';
+      const div = document.createElement('div');
+      div.className = 'menu-item ' + (isDual ? 'dual-temp' : 'single-temp') + (hasQty ? ' has-qty' : '');
+      div.id = 'group-' + firstIdx;
 
-    const categories = [...new Set(MENU.map(it => it.category))];
-
-    categories.forEach(cat => {
-      const header = document.createElement('div');
-      header.className = 'category-header';
-      header.textContent = cat;
-      section.appendChild(header);
-
-      // 將同類別品項按 baseName 分組（保留順序）
-      const groups = [];
-      MENU.filter(it => it.category === cat).forEach(it => {
-        const idx  = MENU.indexOf(it);
-        const last = groups[groups.length - 1];
-        if (last && last.baseName === it.baseName) {
-          last.entries.push({ it, idx });
-        } else {
-          groups.push({ baseName: it.baseName, emoji: it.emoji, entries: [{ it, idx }] });
-        }
-      });
-
-      groups.forEach(group => {
-        const isDual   = group.entries.length > 1;
-        const firstIdx = group.entries[0].idx;
-        const hasQty   = group.entries.some(({ idx }) => (qty[idx] || 0) > 0);
-
-        const div = document.createElement('div');
-        div.className = 'menu-item ' + (isDual ? 'dual-temp' : 'single-temp') + (hasQty ? ' has-qty' : '');
-        div.id = 'group-' + firstIdx;
-
-        if (isDual) {
-          // ── 雙溫度卡片 ──
-          const tempRowsHTML = group.entries.map(({ it, idx }) => `
-            <div class="temp-row">
-              <span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>
-              <span class="temp-price">NT$ ${it.price}</span>
-              <div class="qty-control">
-                <button class="qty-btn minus" onclick="changeQty(${idx},-1)">−</button>
-                <div class="qty-display" id="qty-${idx}">${qty[idx] || 0}</div>
-                <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
-              </div>
-            </div>`).join('');
-
-          div.innerHTML = `
-            <div class="item-emoji">${group.emoji}</div>
-            <div class="item-info">
-              <div class="item-name">${group.baseName}</div>
-              ${tempRowsHTML}
-            </div>`;
-        } else {
-          // ── 單一溫度卡片 ──
-          const { it, idx } = group.entries[0];
-          const priceStr = it.price ? `NT$ ${it.price}` : '洽詢';
-          const qtyCtrl  = it.price
-            ? `<div class="qty-control">
-                <button class="qty-btn minus" onclick="changeQty(${idx},-1)">−</button>
-                <div class="qty-display" id="qty-${idx}">${qty[idx] || 0}</div>
-                <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
-               </div>`
-            : `<span style="font-size:11px;color:var(--tan);font-style:italic;">洽詢</span>`;
-
-          div.innerHTML = `
-            <div class="item-emoji">${it.emoji}</div>
-            <div class="item-info">
-              <div class="item-name">${it.baseName}</div>
-              <div class="item-price">${priceStr}</div>
+      if (isDual) {
+        const tempRowsHTML = group.entries.map(({ it, idx }) => `
+          <div class="temp-row">
+            <span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>
+            <span class="temp-price">NT$ ${it.price}</span>
+            <div class="qty-control">
+              <button class="qty-btn minus" onclick="changeQty(${idx},-1)">−</button>
+              <div class="qty-display" id="qty-${idx}">${qty[idx] || 0}</div>
+              <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
             </div>
-            ${qtyCtrl}`;
-        }
+          </div>`).join('');
+        div.innerHTML = `
+          <div class="item-emoji">${group.emoji}</div>
+          <div class="item-info">
+            <div class="item-name">${group.baseName}</div>
+            ${tempRowsHTML}
+          </div>`;
+      } else {
+        const { it, idx } = group.entries[0];
+        const priceStr = it.price ? `NT$ ${it.price}` : '洽詢';
+        const qtyCtrl  = it.price
+          ? `<div class="qty-control">
+              <button class="qty-btn minus" onclick="changeQty(${idx},-1)">−</button>
+              <div class="qty-display" id="qty-${idx}">${qty[idx] || 0}</div>
+              <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
+             </div>`
+          : `<span style="font-size:11px;color:var(--tan);font-style:italic;">洽詢</span>`;
+        div.innerHTML = `
+          <div class="item-emoji">${it.emoji}</div>
+          <div class="item-info">
+            <div class="item-name">${it.baseName}</div>
+            <div class="item-price">${priceStr}</div>
+          </div>
+          ${qtyCtrl}`;
+      }
+      section.appendChild(div);
+    });
+  });
+}
 
-        section.appendChild(div);
-      });
+// ══════════════════════════════════════════
+// 數量控制
+// ══════════════════════════════════════════
+function changeQty(idx, delta) {
+  qty[idx] = Math.max(0, (qty[idx] || 0) + delta);
+  document.getElementById('qty-' + idx).textContent = qty[idx];
+  const baseName = MENU[idx].baseName;
+  const firstIdx = MENU.findIndex(m => m.baseName === baseName);
+  const card = document.getElementById('group-' + firstIdx);
+  if (card) {
+    const hasQty = MENU
+      .map((m, i) => m.baseName === baseName ? i : -1)
+      .filter(i => i >= 0)
+      .some(i => (qty[i] || 0) > 0);
+    card.classList.toggle('has-qty', hasQty);
+  }
+  renderSummary();
+}
+
+// ══════════════════════════════════════════
+// 訂單摘要
+// ══════════════════════════════════════════
+function renderSummary() {
+  const cards = document.getElementById('orderCards');
+  const empty = document.getElementById('summaryEmpty');
+  const selected = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
+  cards.innerHTML = '';
+  if (selected.length === 0) {
+    empty.style.display = 'block';
+    cards.style.display = 'none';
+  } else {
+    empty.style.display = 'none';
+    cards.style.display = 'grid';
+    selected.forEach(it => {
+      const i    = MENU.indexOf(it);
+      const card = document.createElement('div');
+      card.className = 'order-card';
+      card.innerHTML = `
+        <div class="order-card-emoji">${it.emoji}</div>
+        <div class="order-card-name">${it.displayName}</div>
+        <div class="order-card-qty">×${qty[i]}</div>`;
+      cards.appendChild(card);
     });
   }
+}
 
-  // ══════════════════════════════════════════
-  // 數量控制
-  // ══════════════════════════════════════════
+// ══════════════════════════════════════════
+// Toast
+// ══════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
 
-  function changeQty(idx, delta) {
-    qty[idx] = Math.max(0, (qty[idx] || 0) + delta);
-    document.getElementById('qty-' + idx).textContent = qty[idx];
+// ══════════════════════════════════════════
+// 送出訂單
+// ══════════════════════════════════════════
+const SPECIAL_KEYWORDS = ['手沖', '野草茶'];
 
-    // 更新卡片 has-qty（找同 baseName 的所有條目）
-    const baseName = MENU[idx].baseName;
-    const firstIdx = MENU.findIndex(m => m.baseName === baseName);
-    const card = document.getElementById('group-' + firstIdx);
-    if (card) {
-      const hasQty = MENU
-        .map((m, i) => m.baseName === baseName ? i : -1)
-        .filter(i => i >= 0)
-        .some(i => (qty[i] || 0) > 0);
-      card.classList.toggle('has-qty', hasQty);
-    }
-    renderSummary();
+function submitOrder() {
+  if (submitted) return;
+  const seat     = document.getElementById('seatInput').value.trim();
+  const selected = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
+  if (selected.length === 0) { showToast('請至少選擇一個品項 🍽️'); return; }
+  if (!seat) { showToast('請選擇座位號碼 📍'); document.getElementById('seatInput').focus(); return; }
+  const hasSpecial = selected.some(it => SPECIAL_KEYWORDS.some(kw => it.displayName.includes(kw)));
+  document.getElementById('confirmExtra').style.display = hasSpecial ? 'block' : 'none';
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+
+function cancelConfirm() { document.getElementById('confirmOverlay').classList.remove('show'); }
+function closeSuccess()  { document.getElementById('successOverlay').classList.remove('show'); }
+
+async function doSubmit() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+  submitted = true;
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+
+  const seat      = document.getElementById('seatInput').value.trim();
+  const guestName = document.getElementById('guestInput').value.trim();
+  const selected  = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
+  const total     = selected.reduce((s, it) => s + it.price * qty[MENU.indexOf(it)], 0);
+
+  const payload = {
+    seatNumber: seat,
+    guestName:  guestName,
+    items: selected.map(it => {
+      const i = MENU.indexOf(it);
+      return { name: it.displayName, qty: qty[i], price: it.price };
+    }),
+    totalPrice: total
+  };
+
+  let orderNum = '';
+  try {
+    const res  = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body:   new URLSearchParams({ data: JSON.stringify(payload) })
+    });
+    const json = await res.json();
+    if (json && json.orderNumber) orderNum = json.orderNumber;
+  } catch { /* ignore */ }
+
+  if (!orderNum) {
+    const n = Math.floor(1 + Math.random() * 98);
+    orderNum = 'TR-' + String(n).padStart(2, '0');
   }
 
-  // ══════════════════════════════════════════
-  // 訂單摘要（emoji 卡片版）
-  // ══════════════════════════════════════════
+  document.getElementById('orderNumber').textContent = orderNum;
 
-  function renderSummary() {
-    const cards = document.getElementById('orderCards');
-    const empty = document.getElementById('summaryEmpty');
+  // 填入品項卡片
+  const successCards = document.getElementById('successCards');
+  successCards.innerHTML = '';
+  selected.forEach(it => {
+    const i = MENU.indexOf(it);
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    card.innerHTML = `
+      <div class="order-card-emoji">${it.emoji}</div>
+      <div class="order-card-name">${it.displayName}</div>
+      <div class="order-card-qty">×${qty[i]}</div>`;
+    successCards.appendChild(card);
+  });
 
-    const selected = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
-    cards.innerHTML = '';
+  document.getElementById('successOverlay').classList.add('show');
+  btn.innerHTML = '訂單已送出 ✓';
+}
 
-    if (selected.length === 0) {
-      empty.style.display = 'block';
-      cards.style.display = 'none';
-    } else {
-      empty.style.display = 'none';
-      cards.style.display = 'grid';
-      selected.forEach(it => {
-        const i    = MENU.indexOf(it);
-        const card = document.createElement('div');
-        card.className = 'order-card';
-        card.innerHTML = `
-          <div class="order-card-emoji">${it.emoji}</div>
-          <div class="order-card-name">${it.displayName}</div>
-          <div class="order-card-qty">×${qty[i]}</div>`;
-        cards.appendChild(card);
-      });
-    }
-  }
-
-  // ══════════════════════════════════════════
-  // Toast
-  // ══════════════════════════════════════════
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
-  }
-
-  // ══════════════════════════════════════════
-  // 送出訂單（含確認視窗）
-  // ══════════════════════════════════════════
-
-  const SPECIAL_KEYWORDS = ['手沖', '野草茶'];
-
-  function submitOrder() {
-    if (submitted) return;
-
-    const seat     = document.getElementById('seatInput').value.trim();
-    const selected = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
-
-    if (selected.length === 0) { showToast('請至少選擇一個品項 🍽️'); return; }
-    if (!seat) { showToast('請選擇座位號碼 📍'); document.getElementById('seatInput').focus(); return; }
-
-    // 判斷是否含需要特別說明的品項
-    const hasSpecial = selected.some(it =>
-      SPECIAL_KEYWORDS.some(kw => it.displayName.includes(kw))
-    );
-    document.getElementById('confirmExtra').style.display = hasSpecial ? 'block' : 'none';
-    document.getElementById('confirmOverlay').classList.add('show');
-  }
-
-  function cancelConfirm() {
-    document.getElementById('confirmOverlay').classList.remove('show');
-  }
-
-  function closeSuccess() {
-    document.getElementById('successOverlay').classList.remove('show');
-  }
-
-  async function doSubmit() {
-    document.getElementById('confirmOverlay').classList.remove('show');
-
-    submitted = true;
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
-
-    const seat      = document.getElementById('seatInput').value.trim();
-    const guestName = document.getElementById('guestInput').value.trim();
-    const selected  = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
-    const total     = selected.reduce((s, it) => s + it.price * qty[MENU.indexOf(it)], 0);
-
-    const payload = {
-      seatNumber: seat,
-      guestName:  guestName,
-      items: selected.map(it => {
-        const i = MENU.indexOf(it);
-        return { name: it.displayName, qty: qty[i], price: it.price };
-      }),
-      totalPrice: total
-    };
-
-    let orderNum = '';
-
-    try {
-      const res  = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body:   new URLSearchParams({ data: JSON.stringify(payload) })
-      });
-      const json = await res.json();
-      if (json && json.orderNumber) {
-        orderNum = json.orderNumber; // Apps Script 回傳的真實編號（如 TR-05）
-      }
-    } catch (e) { /* ignore */ }
-
-    // 若 Apps Script 未回傳編號，產生本地備用編號
-    if (!orderNum) {
-      const n = Math.floor(1 + Math.random() * 98);
-      orderNum = 'TR-' + String(n).padStart(2, '0');
-    }
-
-    document.getElementById('orderNumber').textContent = orderNum;
-    document.getElementById('successOverlay').classList.add('show');
-    btn.innerHTML = '訂單已送出 ✓';
-  }
-
-  // ── 初始化 ──
-  loadMenu();
-  loadSeats();
+// ── 初始化 ──
+loadMenu();
+loadSeats();
 </script>
 </body>
 </html>
