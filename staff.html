@@ -922,7 +922,16 @@ function handleItemUndo(orderId, idx, row) {
   itemDoneMap[orderId][idx] = false;
   row.classList.remove('done');
   const content = row.querySelector('.item-swipe-content');
-  if (content) content.style.transform = 'translateX(0)';
+  if (content) {
+    content.style.transform = 'translateX(0)';
+    content.style.background = '';        // ← 清掉
+  }
+  const itemName = row.querySelector('.item-name');
+  if (itemName) {
+    itemName.style.textDecoration = '';   // ← 清掉
+    itemName.style.color = '';            // ← 清掉
+    itemName.style.opacity = '';          // ← 清掉
+  }
   // Local undo only — if the whole order was already pushed to '完成',
   // you'd need to call updateStatus back. Add that here if needed.
 }
