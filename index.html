@@ -579,8 +579,8 @@ function renderMenu() {
         div.innerHTML = `
           <div class="item-emoji">${it.emoji}</div>
           <div class="item-info">
-            <div class="item-name">${it.baseName}</div>
-            <div class="item-price">${tempBadge} ${priceStr}</div>
+            <div class="item-name">${it.baseName} ${tempBadge}</div>
+            <div class="item-price">${priceStr}</div>
           </div>
           ${qtyCtrl}`;
       }
