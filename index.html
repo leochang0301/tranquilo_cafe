@@ -572,18 +572,29 @@ function renderMenu() {
               <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
              </div>`
           : `<span style="font-size:11px;color:var(--tan);font-style:italic;">洽詢</span>`;
-        const tempBadge = it.temp
-          ? `<span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>`
-          : '';
 
-        div.innerHTML = `
-          <div class="item-emoji">${it.emoji}</div>
-          <div class="item-info">
-            <div class="item-name">${it.baseName} ${tempBadge}</div>
-            <div class="item-price">${priceStr}</div>
-          </div>
-          ${qtyCtrl}`;
+        if (it.temp) {
+          div.innerHTML = `
+            <div class="item-emoji">${it.emoji}</div>
+            <div class="item-info">
+              <div class="item-name">${it.baseName}</div>
+              <div class="temp-row">
+                <span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>
+                <span class="temp-price">${priceStr}</span>
+                ${qtyCtrl}
+              </div>
+            </div>`;
+        } else {
+          div.innerHTML = `
+            <div class="item-emoji">${it.emoji}</div>
+            <div class="item-info">
+              <div class="item-name">${it.baseName}</div>
+              <div class="item-price">${priceStr}</div>
+            </div>
+            ${qtyCtrl}`;
+        }
       }
+
       section.appendChild(div);
     });
   });
