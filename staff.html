@@ -1074,52 +1074,39 @@ async function confirmSplitPay() {
 
   const items   = parseItems(order.items);
   const paidSet = splitPaidMap[orderId] || new Set();
-  const staff   = document.getElementById('staffSelect').value || '';
 
   const newIndices = [];
   let paidAmount   = 0;
   splitChecked.forEach((checked, idx) => {
-    if (checked && !paidSet.has(idx)) { newIndices.push(idx); paidAmount += extractItemPrice(items[idx]); }
+    if (checked && !paidSet.has(idx)) {
+      newIndices.push(idx);
+      paidAmount += extractItemPrice(items[idx]);
+    }
   });
 
   if (newIndices.length === 0) { showToast('請先勾選要結帳的品項'); return; }
 
+  // 純前端更新，不呼叫後端
+  if (!splitPaidMap[orderId]) splitPaidMap[orderId] = new Set();
+  newIndices.forEach(idx => splitPaidMap[orderId].add(idx));
+
   closeSplitPay();
-  showLoading(true);
 
-  try {
-    const result = await apiPost({
-      action:      'splitPay',
-      orderId,
-      paidIndices: newIndices,
-      paidAmount,
-      staffName:   staff,
-    });
+  // 計算是否全部結清
+  let totalPaid = 0;
+  items.forEach((item, idx) => {
+    if (splitPaidMap[orderId].has(idx)) totalPaid += extractItemPrice(item);
+  });
 
-    if (result && result.ok === false) throw new Error(result.error || 'server error');
+  showToast(`本次收款 $${paidAmount} ✓`, 'ok');
 
-    if (!splitPaidMap[orderId]) splitPaidMap[orderId] = new Set();
-    newIndices.forEach(idx => splitPaidMap[orderId].add(idx));
-
-    // Check if all items paid
-    let totalPaid = 0;
-    items.forEach((item, idx) => { if (splitPaidMap[orderId].has(idx)) totalPaid += extractItemPrice(item); });
-
-    showToast(`已結帳 $${paidAmount} ✓`, 'ok');
-
-    if (totalPaid >= (parseFloat(order.totalPrice) || 0)) {
-      const i = allOrders.findIndex(o => o.orderId === orderId);
-      if (i !== -1) allOrders.splice(i, 1);
-      delete splitPaidMap[orderId];
-      showToast(`${orderId} 全部結清 ✓`, 'ok');
-    }
-
-    updateBadges(); renderTab2();
-  } catch (e) {
-    console.error('splitPay error', e);
-    //showToast('分開結帳失敗，請重試', 'err');
-    showToast(e.message || String(e), 'err');
-  } finally { showLoading(false); }
+  if (totalPaid >= (parseFloat(order.totalPrice) || 0)) {
+    // 全部結清才呼叫後端
+    await handleOrderPaid(orderId);
+  } else {
+    updateBadges();
+    renderTab2();
+  }
 }
 
 function closeSplitPay() {
