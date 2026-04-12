@@ -855,24 +855,26 @@ function bindItemSwipeBidi(row) {
     if (e.cancelable && e.type === 'touchmove' && Math.abs(deltaX) > 8) e.preventDefault();
   };
 
-  const onEnd = () => {
+const onEnd = () => {
     if (!active) return; active = false;
     content.style.transition = 'transform 0.3s cubic-bezier(0.25,1,0.5,1)';
     if (Math.abs(deltaX) >= SWIPE_THRESH) {
-      const dir = deltaX > 0 ? 1 : -1;
+      const dir        = deltaX > 0 ? 1 : -1;
+      const swipeRight = deltaX > 0;
       content.style.transform = `translateX(${dir * (row.offsetWidth + 30)}px)`;
-      bgR && (bgR.style.opacity = deltaX > 0 ? '1' : '0');
-      bgL && (bgL.style.opacity = deltaX < 0 ? '1' : '0');
+      bgR && (bgR.style.opacity = swipeRight ? '1' : '0');
+      bgL && (bgL.style.opacity = swipeRight ? '0' : '1');
+      deltaX = 0;
       setTimeout(() => {
-        if (deltaX > 0) handleItemDone(orderId, idx, row);
+        if (swipeRight) handleItemDone(orderId, idx, row);
         else            handleItemUndo(orderId, idx, row);
       }, 280);
     } else {
       content.style.transform = 'translateX(0)';
       bgR && (bgR.style.opacity = '0');
       bgL && (bgL.style.opacity = '0');
+      deltaX = 0;
     }
-    deltaX = 0;
   };
 
   row.addEventListener('touchstart', onStart, { passive:true });
