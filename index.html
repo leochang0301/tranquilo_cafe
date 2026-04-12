@@ -479,17 +479,33 @@ function initMenu(rawItems) {
 }
 
 function expandItems(items) {
+  const TEMP_CATEGORIES = ['咖啡', '飲料', '酒類'];  // ← 這些才顯示冰/熱
   const result = [];
   items.forEach(it => {
-    const hasBoth = it.hotPrice && it.coldPrice;
+    const showTemp = TEMP_CATEGORIES.includes(it.category);
+    const hasBoth  = it.hotPrice && it.coldPrice;
     if (it.hotPrice) {
-      result.push({ displayName: hasBoth ? it.name+'(熱)' : it.name, baseName: it.name, price: it.hotPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '熱' : null });
+      result.push({
+        displayName: showTemp ? it.name + '(熱)' : (hasBoth ? it.name + '(熱)' : it.name),
+        baseName: it.name, price: it.hotPrice,
+        emoji: it.emoji, category: it.category,
+        temp: showTemp || hasBoth ? '熱' : null
+      });
     }
     if (it.coldPrice) {
-      result.push({ displayName: hasBoth ? it.name+'(冰)' : it.name, baseName: it.name, price: it.coldPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '冰' : null });
+      result.push({
+        displayName: showTemp ? it.name + '(冰)' : (hasBoth ? it.name + '(冰)' : it.name),
+        baseName: it.name, price: it.coldPrice,
+        emoji: it.emoji, category: it.category,
+        temp: showTemp || hasBoth ? '冰' : null
+      });
     }
     if (!it.hotPrice && !it.coldPrice) {
-      result.push({ displayName: it.name, baseName: it.name, price: null, emoji: it.emoji, category: it.category, temp: null });
+      result.push({
+        displayName: it.name, baseName: it.name,
+        price: null, emoji: it.emoji,
+        category: it.category, temp: null
+      });
     }
   });
   return result;
