@@ -484,17 +484,33 @@ function initMenu(rawItems) {
 }
 
 function expandItems(items) {
+  const TEMP_CATEGORIES = ['咖啡', '飲料', '酒類'];
   const result = [];
   items.forEach(it => {
-    const hasBoth = it.hotPrice && it.coldPrice;
+    const hasBoth  = it.hotPrice && it.coldPrice;
+    const showTemp = TEMP_CATEGORIES.includes(it.category);
     if (it.hotPrice) {
-      result.push({ displayName: hasBoth ? it.name+'(熱)' : it.name, baseName: it.name, price: it.hotPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '熱' : null });
+      result.push({
+        displayName: (hasBoth || showTemp) ? it.name + '(熱)' : it.name,
+        baseName: it.name, price: it.hotPrice,
+        emoji: it.emoji, category: it.category,
+        temp: (hasBoth || showTemp) ? '熱' : null
+      });
     }
     if (it.coldPrice) {
-      result.push({ displayName: hasBoth ? it.name+'(冰)' : it.name, baseName: it.name, price: it.coldPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '冰' : null });
+      result.push({
+        displayName: (hasBoth || showTemp) ? it.name + '(冰)' : it.name,
+        baseName: it.name, price: it.coldPrice,
+        emoji: it.emoji, category: it.category,
+        temp: (hasBoth || showTemp) ? '冰' : null
+      });
     }
     if (!it.hotPrice && !it.coldPrice) {
-      result.push({ displayName: it.name, baseName: it.name, price: null, emoji: it.emoji, category: it.category, temp: null });
+      result.push({
+        displayName: it.name, baseName: it.name,
+        price: null, emoji: it.emoji,
+        category: it.category, temp: null
+      });
     }
   });
   return result;
@@ -561,13 +577,26 @@ function renderMenu() {
               <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
              </div>`
           : `<span style="font-size:11px;color:var(--tan);font-style:italic;">洽詢</span>`;
-        div.innerHTML = `
-          <div class="item-emoji">${it.emoji}</div>
-          <div class="item-info">
-            <div class="item-name">${it.baseName}</div>
-            <div class="item-price">${priceStr}</div>
-          </div>
-          ${qtyCtrl}`;
+        if (it.temp) {
+          div.innerHTML = `
+            <div class="item-emoji">${it.emoji}</div>
+            <div class="item-info">
+              <div class="item-name">${it.baseName}</div>
+              <div class="temp-row">
+                <span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>
+                <span class="temp-price">${priceStr}</span>
+                ${qtyCtrl}
+              </div>
+            </div>`;
+        } else {
+          div.innerHTML = `
+            <div class="item-emoji">${it.emoji}</div>
+            <div class="item-info">
+              <div class="item-name">${it.baseName}</div>
+              <div class="item-price">${priceStr}</div>
+            </div>
+            ${qtyCtrl}`;
+        }
       }
       section.appendChild(div);
     });
