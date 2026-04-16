@@ -309,10 +309,8 @@
   <div class="confirm-card">
     <span class="confirm-icon">🛎️</span>
     <div class="confirm-title">確認送出訂單？</div>
-    <div class="confirm-msg">請到櫃檯確認餐點內容</div>
-    <div class="confirm-extra" id="confirmExtra" style="display:none;">
-      請到櫃檯選豆子或野草茶種類
-    </div>
+    <div class="confirm-msg" id="confirmMsg">請到櫃檯確認餐點內容</div>
+    <div class="confirm-extra" id="confirmExtra" style="display:none;"></div>
     <div class="confirm-actions">
       <button class="confirm-cancel" onclick="cancelConfirm()">取消</button>
       <button class="confirm-ok" onclick="doSubmit()">確認送出</button>
@@ -325,7 +323,7 @@
   <div class="success-card">
     <span class="success-icon">🎉</span>
     <div class="success-title">訂單已送出！</div>
-    <div class="success-msg">請到櫃檯確認餐點內容</div>
+    <div class="success-msg">餐點現做，請稍等唷 ☕</div>
     <div class="order-number">
       <div class="label">訂單編號</div>
       <div class="number" id="orderNumber">—</div>
@@ -356,25 +354,32 @@
 // 店家設定 — 新增店家只需在這裡加一筆
 // ══════════════════════════════════════════
 const STORES = {
-  tranquilo: {
-    name:        '川夏',
-    scriptUrl:   'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec',
-    igHandle:    null,
-    showIGShare: false,
-    cacheKey:    'menu_tranquilo_v2',
+  chuanxia: {
+    name:          '川夏',
+    scriptUrl:     'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec',
+    igHandle:      null,
+    showIGShare:   false,
+    cacheKey:      'menu_chuanxia_v2',
+    orderPrefix:   'TR',
+    specialMsg:    null,  // 川夏：不顯示特別提示
   },
-  underden: {
-    name:        '渡深',
-    scriptUrl:   'https://script.google.com/macros/s/AKfycbypWJMIdQYy6HYkgW7uVPB1X0PwzsQN9UpAnzGSprAHuf5DchTx3ykJJFhRFQoPEuaj/exec',
-    igHandle:    'tranquilo_underden',
-    showIGShare: true,
-    cacheKey:    'menu_underden_v2',
+  dusen: {
+    name:          '渡深',
+    scriptUrl:     'https://script.google.com/macros/s/AKfycbypWJMIdQYy6HYkgW7uVPB1X0PwzsQN9UpAnzGSprAHuf5DchTx3ykJJFhRFQoPEuaj/exec',
+    igHandle:      'tranquilo_underden',
+    showIGShare:   true,
+    cacheKey:      'menu_dusen_v2',
+    orderPrefix:   'UD',
+    specialMsg: {
+      '手沖':  '手沖咖啡豆種類將透過 Instagram 傳送給您挑選 ☕',
+      '野草茶': '野草茶種類將透過 Instagram 傳送給您挑選 🌿',
+    },
   }
 };
 
 // 讀 URL 參數 ?store=xxx，預設川夏
-const storeKey = new URLSearchParams(location.search).get('store') || 'tranquilo';
-const STORE    = STORES[storeKey] || STORES.tranquilo;
+const storeKey = new URLSearchParams(location.search).get('store') || 'chuanxia';
+const STORE    = STORES[storeKey] || STORES.chuanxia;
 const SCRIPT_URL = STORE.scriptUrl;
 const CACHE_KEY  = STORE.cacheKey;
 
@@ -479,33 +484,17 @@ function initMenu(rawItems) {
 }
 
 function expandItems(items) {
-  const TEMP_CATEGORIES = ['咖啡', '飲料', '酒類'];  // ← 這些才顯示冰/熱
   const result = [];
   items.forEach(it => {
-    const showTemp = TEMP_CATEGORIES.includes(it.category);
-    const hasBoth  = it.hotPrice && it.coldPrice;
+    const hasBoth = it.hotPrice && it.coldPrice;
     if (it.hotPrice) {
-      result.push({
-        displayName: showTemp ? it.name + '(熱)' : (hasBoth ? it.name + '(熱)' : it.name),
-        baseName: it.name, price: it.hotPrice,
-        emoji: it.emoji, category: it.category,
-        temp: showTemp || hasBoth ? '熱' : null
-      });
+      result.push({ displayName: hasBoth ? it.name+'(熱)' : it.name, baseName: it.name, price: it.hotPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '熱' : null });
     }
     if (it.coldPrice) {
-      result.push({
-        displayName: showTemp ? it.name + '(冰)' : (hasBoth ? it.name + '(冰)' : it.name),
-        baseName: it.name, price: it.coldPrice,
-        emoji: it.emoji, category: it.category,
-        temp: showTemp || hasBoth ? '冰' : null
-      });
+      result.push({ displayName: hasBoth ? it.name+'(冰)' : it.name, baseName: it.name, price: it.coldPrice, emoji: it.emoji, category: it.category, temp: hasBoth ? '冰' : null });
     }
     if (!it.hotPrice && !it.coldPrice) {
-      result.push({
-        displayName: it.name, baseName: it.name,
-        price: null, emoji: it.emoji,
-        category: it.category, temp: null
-      });
+      result.push({ displayName: it.name, baseName: it.name, price: null, emoji: it.emoji, category: it.category, temp: null });
     }
   });
   return result;
@@ -572,29 +561,14 @@ function renderMenu() {
               <button class="qty-btn plus" onclick="changeQty(${idx},1)">+</button>
              </div>`
           : `<span style="font-size:11px;color:var(--tan);font-style:italic;">洽詢</span>`;
-
-        if (it.temp) {
-          div.innerHTML = `
-            <div class="item-emoji">${it.emoji}</div>
-            <div class="item-info">
-              <div class="item-name">${it.baseName}</div>
-              <div class="temp-row">
-                <span class="temp-badge ${it.temp === '熱' ? 'hot' : 'cold'}">${it.temp}</span>
-                <span class="temp-price">${priceStr}</span>
-                ${qtyCtrl}
-              </div>
-            </div>`;
-        } else {
-          div.innerHTML = `
-            <div class="item-emoji">${it.emoji}</div>
-            <div class="item-info">
-              <div class="item-name">${it.baseName}</div>
-              <div class="item-price">${priceStr}</div>
-            </div>
-            ${qtyCtrl}`;
-        }
+        div.innerHTML = `
+          <div class="item-emoji">${it.emoji}</div>
+          <div class="item-info">
+            <div class="item-name">${it.baseName}</div>
+            <div class="item-price">${priceStr}</div>
+          </div>
+          ${qtyCtrl}`;
       }
-
       section.appendChild(div);
     });
   });
@@ -667,8 +641,35 @@ function submitOrder() {
   const selected = MENU.filter((it, i) => (qty[i] || 0) > 0 && it.price);
   if (selected.length === 0) { showToast('請至少選擇一個品項 🍽️'); return; }
   if (!seat) { showToast('請選擇座位號碼 📍'); document.getElementById('seatInput').focus(); return; }
-  const hasSpecial = selected.some(it => SPECIAL_KEYWORDS.some(kw => it.displayName.includes(kw)));
-  document.getElementById('confirmExtra').style.display = hasSpecial ? 'block' : 'none';
+
+  const confirmExtra = document.getElementById('confirmExtra');
+  const confirmMsg   = document.getElementById('confirmMsg');
+
+  if (STORE.specialMsg) {
+    // 渡深：判斷有哪些特殊品項，各自顯示對應提示
+    const hitMsgs = [];
+    Object.entries(STORE.specialMsg).forEach(([kw, msg]) => {
+      if (selected.some(it => it.displayName.includes(kw))) hitMsgs.push(msg);
+    });
+    if (hitMsgs.length > 0) {
+      confirmExtra.innerHTML = hitMsgs.map(m => `<div>${m}</div>`).join('');
+      confirmExtra.style.display = 'block';
+    } else {
+      confirmExtra.style.display = 'none';
+    }
+    confirmMsg.style.display = 'none';  // 渡深不顯示「請到櫃檯」
+  } else {
+    // 川夏：原本邏輯
+    confirmMsg.style.display = '';
+    const hasSpecial = selected.some(it => SPECIAL_KEYWORDS.some(kw => it.displayName.includes(kw)));
+    if (hasSpecial) {
+      confirmExtra.innerHTML = '請到櫃檯選豆子或野草茶種類';
+      confirmExtra.style.display = 'block';
+    } else {
+      confirmExtra.style.display = 'none';
+    }
+  }
+
   document.getElementById('confirmOverlay').classList.add('show');
 }
 
@@ -688,8 +689,9 @@ async function doSubmit() {
   const total     = selected.reduce((s, it) => s + it.price * qty[MENU.indexOf(it)], 0);
 
   const payload = {
-    seatNumber: seat,
-    guestName:  guestName,
+    seatNumber:  seat,
+    guestName:   guestName,
+    storePrefix: STORE.orderPrefix || 'TR',
     items: selected.map(it => {
       const i = MENU.indexOf(it);
       return { name: it.displayName, qty: qty[i], price: it.price };
@@ -708,8 +710,9 @@ async function doSubmit() {
   } catch { /* ignore */ }
 
   if (!orderNum) {
+    const prefix = STORE.orderPrefix || 'TR';
     const n = Math.floor(1 + Math.random() * 98);
-    orderNum = 'TR-' + String(n).padStart(2, '0');
+    orderNum = prefix + String(n).padStart(2, '0');
   }
 
   document.getElementById('orderNumber').textContent = orderNum;
