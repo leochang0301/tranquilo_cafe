@@ -354,21 +354,21 @@
 // 店家設定 — 新增店家只需在這裡加一筆
 // ══════════════════════════════════════════
 const STORES = {
-  chuanxia: {
+  tranquilo: {
     name:          '川夏',
     scriptUrl:     'https://script.google.com/macros/s/AKfycbzXfw9tTQJgwteqUIbhx-yaWHKb1X2skilxVRMWe8-1r6VRTLuuileTb_cpJiCklgpZYw/exec',
     igHandle:      null,
     showIGShare:   false,
-    cacheKey:      'menu_chuanxia_v2',
+    cacheKey:      'menu_tranquilo_v2',
     orderPrefix:   'TR',
     specialMsg:    null,  // 川夏：不顯示特別提示
   },
-  dusen: {
+  underden: {
     name:          '渡深',
     scriptUrl:     'https://script.google.com/macros/s/AKfycbypWJMIdQYy6HYkgW7uVPB1X0PwzsQN9UpAnzGSprAHuf5DchTx3ykJJFhRFQoPEuaj/exec',
     igHandle:      'tranquilo_underden',
     showIGShare:   true,
-    cacheKey:      'menu_dusen_v2',
+    cacheKey:      'menu_underden_v2',
     orderPrefix:   'UD',
     specialMsg: {
       '手沖':  '手沖咖啡豆種類將透過 Instagram 傳送給您挑選 ☕',
@@ -378,8 +378,8 @@ const STORES = {
 };
 
 // 讀 URL 參數 ?store=xxx，預設川夏
-const storeKey = new URLSearchParams(location.search).get('store') || 'chuanxia';
-const STORE    = STORES[storeKey] || STORES.chuanxia;
+const storeKey = new URLSearchParams(location.search).get('store') || 'tranquilo';
+const STORE    = STORES[storeKey] || STORES.tranquilo;
 const SCRIPT_URL = STORE.scriptUrl;
 const CACHE_KEY  = STORE.cacheKey;
 
